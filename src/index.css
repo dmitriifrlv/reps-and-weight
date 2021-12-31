@@ -1,13 +1,79 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "Baloo Thambi 2";
+  font-weight: 400;
+  src: local("Baloo Thambi 2"),
+    url(./fonts/BalooThambi2-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Baloo Thambi 2";
+  font-weight: 500;
+  src: local("Baloo Thambi 2"),
+    url(./fonts/BalooThambi2-Medium.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Baloo Thambi 2";
+  font-weight: 600;
+  src: local("Baloo Thambi 2"),
+    url(./fonts/BalooThambi2-SemiBold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Baloo Thambi 2";
+  font-weight: 700;
+  src: local("Baloo Thambi 2"),
+    url(./fonts/BalooThambi2-Bold.ttf) format("truetype");
+}
+@font-face {
+  font-family: "Baloo Thambi 2";
+  font-weight: 800;
+  src: local("Baloo Thambi 2"),
+    url(./fonts/BalooThambi2-ExtraBold.ttf) format("truetype");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+  font-family: "Baloo Thambi 2", cursive;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+#root,
+#__next {
+  isolation: isolate;
 }
