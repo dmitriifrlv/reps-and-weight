@@ -84,7 +84,7 @@ const Login = () => {
   const [login, loginResponse] = useLoginMutation();
   const [signup, signupResponse] = useSignupMutation();
   const [isLogin, setIsLogin] = useState(true);
-  const [error, setError] = useState(false);
+  const [, setError] = useState(false);
 
   const onSubmitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
