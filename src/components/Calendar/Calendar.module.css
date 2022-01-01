@@ -18,7 +18,7 @@
 @media (max-width: 768px) {
   .root {
     --container: calc(100vw - 6px);
-    --cell-height: calc(100vh - 7rem - 6px);
+    /* --cell-height: calc(100vh - 7rem - 6px); */
   }
 }
 
