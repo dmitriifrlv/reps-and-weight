@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Layout } from "../Layout";
-import styled from "@emotion/styled";
-import { CardProps } from "../../Types/StyledElementsTypes";
 import { NeoButton } from "../NeoButton";
 import MuscleGroupSelector from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 import { WorkoutDataType } from "../../Types/WorkoutTypes";
@@ -15,67 +13,14 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { DateInput } from "../DatePicker/DatePicker";
 import { ThemeContext } from "../../Styles/ThemeContext";
-
-const InputContainer = styled.div`
-  width: 100%;
-`;
-
-const WorkoutContainer = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const WorkoutCard = styled.div<CardProps>`
-  width: 500px;
-  height: 80%;
-  box-shadow: ${({ darkMode, theme }) =>
-    darkMode ? theme.shadows.dark.bsDark : theme.shadows.light.bsLight};
-  transition: box-shadow 0.2s ease;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  @media (max-width: 768px) {
-    width: 100%;
-    height: 100%;
-    box-shadow: none;
-  }
-`;
-
-const WorkoutHeader = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 2rem 2rem 0 2rem;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const ExercisesContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  overflow-y: auto;
-  gap: 1.5rem;
-  padding: 1rem 2rem;
-`;
-
-const BtnBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 0rem 2rem 2rem 2rem;
-`;
+import {
+  InputContainer,
+  WorkoutContainer,
+  WorkoutCard,
+  WorkoutHeader,
+  ExercisesContainer,
+  BtnBlock,
+} from "./Styles";
 
 const initialState: WorkoutDataType = {
   muscleGroups: [],
@@ -148,84 +93,80 @@ const Workout = ({ data }: WorkoutType) => {
     }
   }, [data]);
 
-  return (
-    // <Layout
-    //   loading={
-    //     editMode
-    //       ? updateWorkoutResponse.isLoading
-    //       : addWorkoutResponse.isLoading
-    //   }
-    //   onSaveWorkoutHandler={
-    //     editMode ? onUpdateWorkoutHandler : onSaveWorkoutHandler
-    //   }
-    // >
-    <WorkoutContainer>
-      <WorkoutCard darkMode={darkMode}>
-        {exercisePage ? (
-          <Exercise
-            onAddExerciseHandler={onAddExerciseHandler}
-            setExercisePage={setExercisePage}
-            data={editExercise}
-            setEditExercise={setEditExercise}
-          />
-        ) : (
-          <>
-            <WorkoutHeader>
-              <InputContainer>
-                <DateInput
-                  value={
-                    typeof workout.date === "string"
-                      ? new Date(workout.date)
-                      : workout.date
-                  }
-                  onChange={(date: Date) =>
-                    setWorkout((prevState) => ({ ...prevState, date: date }))
-                  }
-                />
-              </InputContainer>
-              <InputContainer>
-                <MuscleGroupSelector
-                  showMuscleGroups={workout.muscleGroups}
-                  onChange={(values) => {
-                    const muscleGroups = values.map(
-                      (muscleGroup: any) => muscleGroup.value
-                    );
-                    setWorkout((prevState) => ({
-                      ...prevState,
-                      muscleGroups: muscleGroups,
-                    }));
-                  }}
-                />
-              </InputContainer>
-            </WorkoutHeader>
-            <ExercisesContainer>
-              {workout.exercises.map((exercise, index) => (
-                <ExerciseCard
-                  setEditExercise={setEditExercise}
-                  setExercisePage={setExercisePage}
-                  key={index}
-                  data={exercise}
-                />
-              ))}
-            </ExercisesContainer>
-            <BtnBlock>
-              {editMode && (
-                <NeoButton
-                  isLoading={deleteWorkoutResponse.isLoading}
-                  onClick={onDeleteWorkoutHandler}
-                  text="Delete"
-                />
-              )}
-              <NeoButton
-                onClick={() => setExercisePage(true)}
-                text="Add New Exercise"
+  return exercisePage ? (
+    <Exercise
+      onAddExerciseHandler={onAddExerciseHandler}
+      setExercisePage={setExercisePage}
+      data={editExercise}
+      setEditExercise={setEditExercise}
+    />
+  ) : (
+    <Layout
+      exercisePage={exercisePage}
+      setExercisePage={setExercisePage}
+      goToExercisePage={() => setExercisePage(true)}
+      editMode={editMode}
+      loading={
+        editMode
+          ? updateWorkoutResponse.isLoading
+          : addWorkoutResponse.isLoading
+      }
+      onSaveWorkoutHandler={
+        editMode ? onUpdateWorkoutHandler : onSaveWorkoutHandler
+      }
+    >
+      <WorkoutContainer>
+        <WorkoutCard darkMode={darkMode}>
+          <WorkoutHeader>
+            <InputContainer>
+              <DateInput
+                value={
+                  typeof workout.date === "string"
+                    ? new Date(workout.date)
+                    : workout.date
+                }
+                onChange={(date: Date) =>
+                  setWorkout((prevState) => ({ ...prevState, date: date }))
+                }
               />
-            </BtnBlock>
-          </>
-        )}
-      </WorkoutCard>
-    </WorkoutContainer>
-    // </Layout>
+            </InputContainer>
+            <InputContainer>
+              <MuscleGroupSelector
+                showMuscleGroups={workout.muscleGroups}
+                onChange={(values) => {
+                  const muscleGroups = values.map(
+                    (muscleGroup: any) => muscleGroup.value
+                  );
+                  setWorkout((prevState) => ({
+                    ...prevState,
+                    muscleGroups: muscleGroups,
+                  }));
+                }}
+              />
+            </InputContainer>
+          </WorkoutHeader>
+          <ExercisesContainer>
+            {workout.exercises.map((exercise, index) => (
+              <ExerciseCard
+                setEditExercise={setEditExercise}
+                setExercisePage={setExercisePage}
+                key={index}
+                data={exercise}
+              />
+            ))}
+          </ExercisesContainer>
+          <BtnBlock>
+            {editMode && (
+              <NeoButton
+                isLoading={deleteWorkoutResponse.isLoading}
+                onClick={onDeleteWorkoutHandler}
+                text="Delete"
+              />
+            )}
+          </BtnBlock>
+        </WorkoutCard>
+      </WorkoutContainer>
+    </Layout>
   );
 };
 

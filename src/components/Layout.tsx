@@ -5,14 +5,22 @@ import {
   AiOutlineArrowLeft,
   AiOutlineSave,
 } from "react-icons/ai";
+import { GiCheckMark } from "react-icons/gi";
+
 import { NeoButton } from "../components/NeoButton";
 import { TabButton } from "./TabButton";
-import { useLocation, useNavigate, Outlet } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 type LayoutProps = {
-  // children: React.ReactNode;
+  children: React.ReactNode;
   onSaveWorkoutHandler?: () => void;
+  onAddExerciseHandler?: (exercise: any) => void;
+  goToExercisePage?: () => void;
   loading?: boolean;
+  editMode?: boolean;
+  exercisePage?: boolean;
+  setExercisePage?: (arg: boolean) => void;
+  returnFromExercise?: () => void;
 };
 
 const LayoutContainer = styled.div`
@@ -39,16 +47,19 @@ const Divider = styled.hr`
 export const Layout = ({
   onSaveWorkoutHandler,
   loading,
-}: // children,
-LayoutProps) => {
+  children,
+  editMode,
+  onAddExerciseHandler,
+  exercisePage,
+  setExercisePage,
+  goToExercisePage,
+  returnFromExercise,
+}: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
     <LayoutContainer>
-      <AppContainer>
-        {/* {children} */}
-        <Outlet />
-      </AppContainer>
+      <AppContainer>{children}</AppContainer>
       <Navigation>
         {location.pathname === "/" ? (
           <>
@@ -69,20 +80,49 @@ LayoutProps) => {
             <TabButton
               icon={<AiOutlineArrowLeft size="1.5rem" />}
               text="Back"
-              onClick={() => navigate("/")}
+              onClick={() =>
+                exercisePage ? returnFromExercise!() : navigate("/")
+              }
             />
             <Divider />
-            <TabButton
-              onClick={() => navigate("/workout")}
-              icon={<AiOutlinePlus size="1.5rem" />}
-              text="Add Exercise"
-            />
-            <Divider />
-            <TabButton
-              onClick={() => navigate("/workout")}
-              icon={<AiOutlineSave size="1.5rem" />}
-              text="Save workout"
-            />
+            {!exercisePage && (
+              <>
+                <TabButton
+                  onClick={goToExercisePage!}
+                  icon={<AiOutlinePlus size="1.5rem" />}
+                  text="Exercise"
+                />
+                <Divider />
+              </>
+            )}
+            {exercisePage && (
+              <>
+                <TabButton
+                  onClick={onAddExerciseHandler!}
+                  icon={<GiCheckMark size="1.5rem" />}
+                  text="Add Exercise"
+                />
+                <Divider />
+              </>
+            )}
+            {editMode && !exercisePage && (
+              <>
+                <TabButton
+                  onClick={() => navigate("/workout")}
+                  icon={<AiOutlineSave size="1.5rem" />}
+                  text="Delete"
+                />
+                <Divider />
+              </>
+            )}
+            {!exercisePage && (
+              <TabButton
+                onClick={() => navigate("/workout")}
+                icon={<AiOutlineSave size="1.5rem" />}
+                text="Save"
+              />
+            )}
+
             {/* <NeoButton
               icon={<AiOutlineArrowLeft size="1.5rem" />}
               text="Back To Home"

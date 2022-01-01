@@ -4,7 +4,7 @@ import React from "react";
 type TabButtonProps = {
   text: string;
   icon: JSX.Element;
-  onClick: () => void;
+  onClick: (arg?: any) => void;
 };
 const NeoTabButton = styled.button<{ darkMode: boolean }>`
   cursor: pointer;

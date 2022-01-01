@@ -1,12 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import styled from "@emotion/styled";
 import { nanoid } from "nanoid";
 import { SetType } from "../../Types/WorkoutTypes";
 import { ExerciseType } from "../../Types/WorkoutTypes";
 import { NeoInput } from "../NeoInput";
-import { NeoButton } from "../NeoButton";
 import { IconButton } from "../IconButton";
+import { WorkoutContainer, WorkoutCard } from "./Styles";
+import { ThemeContext } from "../../Styles/ThemeContext";
+import { Layout } from "../Layout";
 
 const ExerciseHeader = styled.div`
   width: 100%;
@@ -21,14 +23,6 @@ const SetsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`;
-
-const BtnBlock = styled.div`
-  width: 100%;
-
-  display: flex;
-  justify-content: space-between;
-  padding: 0rem 2rem 2rem 2rem;
 `;
 
 const ExerciseRow = styled.div`
@@ -55,6 +49,7 @@ export const Exercise = ({
   data,
   setEditExercise,
 }: ExerciseProps) => {
+  const { darkMode } = useContext(ThemeContext);
   const [editMode] = useState(data === null ? false : true);
   const [exercise, setExercise] = useState("");
   const [set, setSet] = useState(initialSetState);
@@ -94,84 +89,88 @@ export const Exercise = ({
       setSets(newArr);
     }
   };
-  console.log(sets);
-  return (
-    <>
-      <ExerciseHeader>
-        <NeoInput
-          value={exercise}
-          onChange={(event) => setExercise(event.target.value)}
-          placeholder="Exercise name"
-        />
-      </ExerciseHeader>
-      <SetsContainer>
-        {sets.map((set) => (
-          <ExerciseRow key={set.id}>
-            <NeoInput
-              placeholder="reps"
-              value={set.reps}
-              type="number"
-              onChange={(event) => updateSet(set, "reps", event.target.value)}
-            />
-            <NeoInput
-              placeholder="reps"
-              value={set.weight}
-              type="number"
-              onChange={(event) => updateSet(set, "weight", event.target.value)}
-            />
 
-            <IconButton
-              icon={<AiOutlineDelete size="1.5rem" />}
-              onClick={() => onDeleteSetHandler(set)}
+  return (
+    <Layout
+      exercisePage={true}
+      setExercisePage={setExercisePage}
+      onAddExerciseHandler={() =>
+        editMode
+          ? onEditExerciseHandler()
+          : onAddExerciseHandler({ exercise, sets })
+      }
+      returnFromExercise={() => {
+        setExercisePage(false);
+        setEditExercise(null);
+      }}
+      editMode={editMode}
+    >
+      <WorkoutContainer>
+        <WorkoutCard darkMode={darkMode}>
+          <ExerciseHeader>
+            <NeoInput
+              value={exercise}
+              onChange={(event) => setExercise(event.target.value)}
+              placeholder="Exercise name"
             />
-          </ExerciseRow>
-        ))}
-        <ExerciseRow>
-          <NeoInput
-            placeholder="reps"
-            value={set.reps}
-            type="number"
-            onChange={(event) =>
-              setSet((prevValue) => ({
-                ...prevValue,
-                reps: parseInt(event.target.value, 10),
-              }))
-            }
-          />
-          <NeoInput
-            placeholder="weight"
-            value={set.weight}
-            type="number"
-            onChange={(event) =>
-              setSet((prevValue) => ({
-                ...prevValue,
-                weight: parseInt(event.target.value, 10),
-              }))
-            }
-          />
-          <IconButton
-            icon={<AiOutlinePlus size="1.5rem" />}
-            onClick={onAddSetHandler}
-          />
-        </ExerciseRow>
-      </SetsContainer>
-      <BtnBlock>
-        <NeoButton
-          onClick={() => {
-            setExercisePage(false);
-            setEditExercise(null);
-          }}
-          text="Return"
-        />
-        <NeoButton
-          onClick={() =>
-            editMode
-              ? onEditExerciseHandler()
-              : onAddExerciseHandler({ exercise, sets })
-          }
-          text={editMode ? "Save Changes" : "Add Exercise"}
-        />
-      </BtnBlock>
-    </>
+          </ExerciseHeader>
+          <SetsContainer>
+            {sets.map((set) => (
+              <ExerciseRow key={set.id}>
+                <NeoInput
+                  placeholder="reps"
+                  value={set.reps}
+                  type="number"
+                  onChange={(event) =>
+                    updateSet(set, "reps", event.target.value)
+                  }
+                />
+                <NeoInput
+                  placeholder="reps"
+                  value={set.weight}
+                  type="number"
+                  onChange={(event) =>
+                    updateSet(set, "weight", event.target.value)
+                  }
+                />
+
+                <IconButton
+                  icon={<AiOutlineDelete size="1.5rem" />}
+                  onClick={() => onDeleteSetHandler(set)}
+                />
+              </ExerciseRow>
+            ))}
+            <ExerciseRow>
+              <NeoInput
+                placeholder="reps"
+                value={set.reps}
+                type="number"
+                onChange={(event) =>
+                  setSet((prevValue) => ({
+                    ...prevValue,
+                    reps: parseInt(event.target.value, 10),
+                  }))
+                }
+              />
+              <NeoInput
+                placeholder="weight"
+                value={set.weight}
+                type="number"
+                onChange={(event) =>
+                  setSet((prevValue) => ({
+                    ...prevValue,
+                    weight: parseInt(event.target.value, 10),
+                  }))
+                }
+              />
+              <IconButton
+                icon={<AiOutlinePlus size="1.5rem" />}
+                onClick={onAddSetHandler}
+              />
+            </ExerciseRow>
+          </SetsContainer>
+        </WorkoutCard>
+      </WorkoutContainer>
+    </Layout>
   );
 };
