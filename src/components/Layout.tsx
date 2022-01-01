@@ -72,7 +72,7 @@ export const Layout = ({
             <TabButton
               onClick={() => navigate("/workout")}
               icon={<AiOutlinePlus size="1.5rem" />}
-              text="Add"
+              text="New Workout"
             />
           </>
         ) : location.pathname.includes("workout") ? (

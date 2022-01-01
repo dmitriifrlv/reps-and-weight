@@ -18,7 +18,7 @@ const StyledInputContainer = styled.div`
 
 const StyledInput = styled.input`
   appearance: none;
-  font-family: inherit;
+  font-family: "Baloo Thambi 2";
   font-size: 1.125rem;
   height: 60px;
   width: 100%;
