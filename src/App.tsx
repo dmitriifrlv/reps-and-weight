@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Login, Home } from "./pages";
+import { Login, Home, Workout } from "./pages";
 import styled from "@emotion/styled";
 import { useContext } from "react";
 import { ThemeContext } from "./Styles/ThemeContext";
@@ -27,6 +27,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="workout">
+            <Route index element={<Workout />} />
+            <Route path=":id" element={<Workout />} />
+          </Route>
         </Route>
       </Routes>
     </AppContainer>

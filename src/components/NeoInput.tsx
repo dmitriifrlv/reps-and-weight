@@ -1,18 +1,19 @@
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useState } from "react";
+import { useState, HTMLInputTypeAttribute } from "react";
 import styled from "@emotion/styled";
 
 type InputProps = {
   error?: boolean;
-  type?: string;
+  type?: HTMLInputTypeAttribute;
   placeholder: string;
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const StyledInputContainer = styled.div`
   width: 100%;
   position: relative;
+  display: inline-flex;
 `;
 
 const StyledInput = styled.input`
@@ -51,6 +52,8 @@ export const NeoInput = ({
   error,
   type = "text",
   placeholder,
+  onChange,
+  value,
   ...props
 }: InputProps) => {
   const [hidePassword, setHidePassword] = useState(true);
@@ -58,12 +61,14 @@ export const NeoInput = ({
   return (
     <StyledInputContainer>
       <StyledInput
+        value={value}
+        onChange={onChange}
+        inputMode={type === "number" ? "decimal" : undefined}
+        pattern={type === "number" ? "[0-9]*(.[0-9]+)?" : ""}
         placeholder={placeholder}
         autoComplete="off"
         autoCorrect="off"
-        type={
-          type === "password" ? (hidePassword ? "password" : "text") : "text"
-        }
+        type={type === "password" ? (hidePassword ? "password" : "text") : type}
       />
       {type === "password" && (
         <InputIcon onClick={() => setHidePassword(!hidePassword)}>

@@ -9,6 +9,7 @@ import { NeoButton } from "../components/NeoButton";
 import { useLocation, useNavigate, Outlet } from "react-router-dom";
 
 type LayoutProps = {
+  // children: React.ReactNode;
   onSaveWorkoutHandler?: () => void;
   loading?: boolean;
 };
@@ -21,7 +22,7 @@ const LayoutContainer = styled.div`
 
 const AppContainer = styled.main`
   label: appContainer;
-  height: calc(100% - 6rem);
+  height: calc(100% - 100px);
   width: 100vw;
 `;
 
@@ -35,12 +36,17 @@ const Navigation = styled.nav`
   font-weight: 600;
 `;
 
-export const Layout = ({ onSaveWorkoutHandler, loading }: LayoutProps) => {
+export const Layout = ({
+  onSaveWorkoutHandler,
+  loading,
+}: // children,
+LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   return (
     <LayoutContainer>
       <AppContainer>
+        {/* {children} */}
         <Outlet />
       </AppContainer>
       <Navigation>
@@ -55,7 +61,7 @@ export const Layout = ({ onSaveWorkoutHandler, loading }: LayoutProps) => {
             <NeoButton
               icon={<AiOutlinePlus size="1.5rem" />}
               text="New Workout"
-              onClick={() => navigate("/workout/add")}
+              onClick={() => navigate("/workout")}
             />
           </>
         ) : location.pathname.includes("workout") ? (

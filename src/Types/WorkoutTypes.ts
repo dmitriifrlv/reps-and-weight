@@ -1,7 +1,7 @@
 type SetType = {
   reps: number;
   weight: number;
-  id: string;
+  id?: string;
 };
 type ExerciseType = {
   sets: SetType[];
