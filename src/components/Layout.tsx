@@ -6,6 +6,7 @@ import {
   AiOutlineSave,
 } from "react-icons/ai";
 import { NeoButton } from "../components/NeoButton";
+import { TabButton } from "./TabButton";
 import { useLocation, useNavigate, Outlet } from "react-router-dom";
 
 type LayoutProps = {
@@ -22,18 +23,17 @@ const LayoutContainer = styled.div`
 
 const AppContainer = styled.main`
   label: appContainer;
-  height: calc(100% - 100px);
+  height: calc(100% - 60px);
   width: 100vw;
 `;
 
 const Navigation = styled.nav`
-  label: navigation;
-  width: 100vw;
+  height: 60px;
   display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  padding: 1.5rem 0;
-  font-weight: 600;
+`;
+
+const Divider = styled.hr`
+  border-color: rgba(255, 255, 255, 0.12);
 `;
 
 export const Layout = ({
@@ -52,26 +52,43 @@ LayoutProps) => {
       <Navigation>
         {location.pathname === "/" ? (
           <>
-            <NeoButton
+            <TabButton
               icon={<AiOutlineUser size="1.5rem" />}
               text="Profile"
               onClick={() => navigate("/profile")}
             />
-
-            <NeoButton
-              icon={<AiOutlinePlus size="1.5rem" />}
-              text="New Workout"
+            <Divider />
+            <TabButton
               onClick={() => navigate("/workout")}
+              icon={<AiOutlinePlus size="1.5rem" />}
+              text="Add"
             />
           </>
         ) : location.pathname.includes("workout") ? (
           <>
-            <NeoButton
+            <TabButton
+              icon={<AiOutlineArrowLeft size="1.5rem" />}
+              text="Back"
+              onClick={() => navigate("/")}
+            />
+            <Divider />
+            <TabButton
+              onClick={() => navigate("/workout")}
+              icon={<AiOutlinePlus size="1.5rem" />}
+              text="Add Exercise"
+            />
+            <Divider />
+            <TabButton
+              onClick={() => navigate("/workout")}
+              icon={<AiOutlineSave size="1.5rem" />}
+              text="Save workout"
+            />
+            {/* <NeoButton
               icon={<AiOutlineArrowLeft size="1.5rem" />}
               text="Back To Home"
               onClick={() => navigate("/")}
-            />
-            <NeoButton
+            /> */}
+            {/* <NeoButton
               icon={<AiOutlineSave size="1.5rem" />}
               text="Save"
               onClick={() => navigate("/")}
@@ -80,7 +97,7 @@ LayoutProps) => {
               //     ? onSaveWorkoutHandler()
               //     : console.warn("the save func is missing ")
               //}
-            />
+            /> */}
           </>
         ) : location.pathname === "/profile" ? (
           <>
