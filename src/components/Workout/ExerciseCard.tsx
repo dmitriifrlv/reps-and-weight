@@ -25,6 +25,7 @@ const ExerciseCardHeader = styled.div`
 `;
 const ExerciseCardTitle = styled.h3`
   font-size: 1.25rem;
+  font-family: "Baloo Thambi 2";
   min-width: max-content;
   font-weight: 600;
 `;
