@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Login } from "./pages";
+import { Login, Home } from "./pages";
 import styled from "@emotion/styled";
 import { useContext } from "react";
 import { ThemeContext } from "./Styles/ThemeContext";
@@ -25,7 +25,9 @@ function App() {
     <AppContainer darkMode={darkMode}>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Layout />}></Route>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+        </Route>
       </Routes>
     </AppContainer>
   );
