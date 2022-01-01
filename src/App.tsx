@@ -3,6 +3,7 @@ import { Login } from "./pages";
 import styled from "@emotion/styled";
 import { useContext } from "react";
 import { ThemeContext } from "./Styles/ThemeContext";
+import { Layout } from "./components/Layout";
 
 const AppContainer = styled.div<{ darkMode: boolean }>`
   color: ${({ theme, darkMode }) =>
@@ -24,6 +25,7 @@ function App() {
     <AppContainer darkMode={darkMode}>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Layout />}></Route>
       </Routes>
     </AppContainer>
   );
