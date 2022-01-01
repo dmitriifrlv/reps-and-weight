@@ -13,6 +13,7 @@ declare module "@emotion/react" {
         bsDarkInset: string;
         bsDarkHover: string;
         bsDarkActive: string;
+        bsDarkHoverTab: string;
       };
       light: {
         bsLight: string;
@@ -36,6 +37,8 @@ const red = "#b43919";
 const bsDark = "-5px -5px 10px #292828, 5px 5px 10px #171717";
 const bsDarkInset = "inset -5px -5px 10px #292828, inset 5px 5px 10px #171717";
 const bsDarkHover = "-2.5px -2.5px 5px #292828, 2.5px 2.5px 5px #171717";
+const bsDarkHoverTab =
+  "inset -2.5px -2.5px 5px #292828, inset 2.5px 2.5px 5px #171717";
 const bsDarkActive = "inset -5px -5px 10px #292828, inset 5px 5px 10px #171717";
 
 const bsLight = "-4px -4px 16px #ffffff, 4px 4px 16px #bcbcbc";
@@ -60,6 +63,7 @@ const theme = {
       bsDarkInset,
       bsDarkHover,
       bsDarkActive,
+      bsDarkHoverTab,
     },
     light: {
       bsLight,
