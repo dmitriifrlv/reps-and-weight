@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Layout } from "../Layout";
-import { NeoButton } from "../NeoButton";
 import MuscleGroupSelector from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 import { WorkoutDataType } from "../../Types/WorkoutTypes";
 import { Exercise } from "./Exercise";
@@ -19,7 +18,6 @@ import {
   WorkoutCard,
   WorkoutHeader,
   ExercisesContainer,
-  BtnBlock,
 } from "./Styles";
 
 const initialState: WorkoutDataType = {
@@ -35,9 +33,9 @@ type WorkoutType = {
 const Workout = ({ data }: WorkoutType) => {
   const navigate = useNavigate();
   const params = useParams();
-  const editMode = params.id === undefined ? false : true;
+  const editMode = Boolean(params.workoutId);
   const [exercisePage, setExercisePage] = useState(false);
-  const [workout, setWorkout] = useState(initialState);
+  const [workout, setWorkout] = useState(() => data ?? initialState);
   const [editExercise, setEditExercise] = useState<any | null>(null);
   const { darkMode } = useContext(ThemeContext);
   const [addWorkout, addWorkoutResponse] = useAddWorkoutMutation();
@@ -65,9 +63,9 @@ const Workout = ({ data }: WorkoutType) => {
   const onSaveWorkoutHandler = () => addWorkout(workout);
 
   const onUpdateWorkoutHandler = () =>
-    updateWorkout({ id: params.id, body: workout });
+    updateWorkout({ id: params.workoutId, payload: workout });
 
-  const onDeleteWorkoutHandler = () => deleteWorkout(params.id);
+  const onDeleteWorkoutHandler = () => deleteWorkout(params.workoutId);
 
   useEffect(() => {
     if (addWorkoutResponse.isSuccess) {
@@ -92,12 +90,13 @@ const Workout = ({ data }: WorkoutType) => {
       setWorkout(data);
     }
   }, [data]);
-
   return exercisePage ? (
     <Exercise
       onAddExerciseHandler={onAddExerciseHandler}
       setExercisePage={setExercisePage}
       data={editExercise}
+      setWorkout={setWorkout}
+      workout={workout}
       setEditExercise={setEditExercise}
     />
   ) : (
@@ -114,6 +113,7 @@ const Workout = ({ data }: WorkoutType) => {
       onSaveWorkoutHandler={
         editMode ? onUpdateWorkoutHandler : onSaveWorkoutHandler
       }
+      onDeleteWorkoutHandler={onDeleteWorkoutHandler}
     >
       <WorkoutContainer>
         <WorkoutCard darkMode={darkMode}>
@@ -155,15 +155,6 @@ const Workout = ({ data }: WorkoutType) => {
               />
             ))}
           </ExercisesContainer>
-          <BtnBlock>
-            {editMode && (
-              <NeoButton
-                isLoading={deleteWorkoutResponse.isLoading}
-                onClick={onDeleteWorkoutHandler}
-                text="Delete"
-              />
-            )}
-          </BtnBlock>
         </WorkoutCard>
       </WorkoutContainer>
     </Layout>

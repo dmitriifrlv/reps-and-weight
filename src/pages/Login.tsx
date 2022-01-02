@@ -7,7 +7,8 @@ import { CgGym } from "react-icons/cg";
 import { ThemeContext } from "../Styles/ThemeContext";
 // import { CardProps } from "../Types/StyledElementsTypes";
 import { useLoginMutation, useSignupMutation } from "../app/service";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { AuthContext } from "../app/AuthContext";
 
 type CardProps = {
   darkMode: boolean;
@@ -77,14 +78,18 @@ const AuthFooter = styled.footer`
 `;
 
 const Login = () => {
+  const authContext = useContext(AuthContext);
   const { darkMode } = useContext(ThemeContext);
+  const location: any = useLocation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("test");
-  const [password, setPassword] = useState("1234");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [login, loginResponse] = useLoginMutation();
   const [signup, signupResponse] = useSignupMutation();
   const [isLogin, setIsLogin] = useState(true);
   const [, setError] = useState(false);
+
+  const from = location.state?.from?.pathname || "/";
 
   const onSubmitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -102,9 +107,10 @@ const Login = () => {
 
   useEffect(() => {
     if (loginResponse.isSuccess || signupResponse.isSuccess) {
-      navigate("/");
+      authContext.setAuthState(loginResponse.data);
+      navigate(from, { replace: true });
     }
-  }, [loginResponse, navigate, signupResponse.isSuccess]);
+  }, [authContext, from, loginResponse, navigate, signupResponse.isSuccess]);
 
   return (
     <>
@@ -122,7 +128,7 @@ const Login = () => {
           <NeoInput
             type="password"
             placeholder="Password"
-            value={email}
+            value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
           <NeoButton

@@ -20,6 +20,12 @@ export const rnwApi = createApi({
         body: payload,
       }),
     }),
+    getUserInfo: builder.query<any, void>({
+      query: () => "user",
+    }),
+    getWorkout: builder.query<any, string>({
+      query: (workoutId) => `workout/${workoutId}`,
+    }),
     addWorkout: builder.mutation({
       query: (payload) => ({
         url: "workout",
@@ -32,7 +38,7 @@ export const rnwApi = createApi({
         return {
           url: `workout/${payload.id}`,
           method: "PUT",
-          body: payload.body,
+          body: payload.payload,
         };
       },
     }),
@@ -51,4 +57,6 @@ export const {
   useDeleteWorkoutMutation,
   useUpdateWorkoutMutation,
   useSignupMutation,
+  useGetUserInfoQuery,
+  useLazyGetWorkoutQuery,
 } = rnwApi;

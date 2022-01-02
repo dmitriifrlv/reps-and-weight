@@ -36,6 +36,7 @@ const CalendarContainer = styled.div`
 `;
 
 export const Calendar = ({ workouts }: CalendarProps) => {
+  console.log(workouts);
   const { darkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const formatDay = (day: Date) => {
@@ -62,10 +63,7 @@ export const Calendar = ({ workouts }: CalendarProps) => {
         {foundWorkoutDay?.length > 0 ? (
           <div>
             {foundWorkoutDay?.map((i) => (
-              <div
-                onClick={() => navigate(`/workout/edit/${i._id}`)}
-                key={i._id}
-              >
+              <div onClick={() => navigate(`/workout/${i._id}`)} key={i._id}>
                 <p className="calendarDate">{date}</p>
                 <div className="workoutDate">
                   <FaDumbbell />

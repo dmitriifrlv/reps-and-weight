@@ -9,7 +9,7 @@ import { GiCheckMark } from "react-icons/gi";
 
 import { NeoButton } from "../components/NeoButton";
 import { TabButton } from "./TabButton";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -21,6 +21,7 @@ type LayoutProps = {
   exercisePage?: boolean;
   setExercisePage?: (arg: boolean) => void;
   returnFromExercise?: () => void;
+  onDeleteWorkoutHandler?: () => void;
 };
 
 const LayoutContainer = styled.div`
@@ -54,9 +55,12 @@ export const Layout = ({
   setExercisePage,
   goToExercisePage,
   returnFromExercise,
+  onDeleteWorkoutHandler,
 }: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  console.log(exercisePage);
+  const params = useParams();
   return (
     <LayoutContainer>
       <AppContainer>{children}</AppContainer>
@@ -105,10 +109,10 @@ export const Layout = ({
                 <Divider />
               </>
             )}
-            {editMode && !exercisePage && (
+            {params.workoutId && !exercisePage && (
               <>
                 <TabButton
-                  onClick={() => navigate("/workout")}
+                  onClick={onDeleteWorkoutHandler!}
                   icon={<AiOutlineSave size="1.5rem" />}
                   text="Delete"
                 />
@@ -117,27 +121,11 @@ export const Layout = ({
             )}
             {!exercisePage && (
               <TabButton
-                onClick={() => navigate("/workout")}
+                onClick={onSaveWorkoutHandler!}
                 icon={<AiOutlineSave size="1.5rem" />}
                 text="Save"
               />
             )}
-
-            {/* <NeoButton
-              icon={<AiOutlineArrowLeft size="1.5rem" />}
-              text="Back To Home"
-              onClick={() => navigate("/")}
-            /> */}
-            {/* <NeoButton
-              icon={<AiOutlineSave size="1.5rem" />}
-              text="Save"
-              onClick={() => navigate("/")}
-              // onClick={() =>
-              //   onSaveWorkoutHandler
-              //     ? onSaveWorkoutHandler()
-              //     : console.warn("the save func is missing ")
-              //}
-            /> */}
           </>
         ) : location.pathname === "/profile" ? (
           <>

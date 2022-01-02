@@ -2,8 +2,11 @@ import { useState, useEffect, useContext } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import styled from "@emotion/styled";
 import { nanoid } from "nanoid";
-import { SetType } from "../../Types/WorkoutTypes";
-import { ExerciseType } from "../../Types/WorkoutTypes";
+import {
+  ExerciseType,
+  WorkoutDataType,
+  SetType,
+} from "../../Types/WorkoutTypes";
 import { NeoInput } from "../NeoInput";
 import { IconButton } from "../IconButton";
 import { WorkoutContainer, WorkoutCard } from "./Styles";
@@ -36,6 +39,8 @@ type ExerciseProps = {
   onAddExerciseHandler: (arg: any) => void;
   data: ExerciseType;
   setEditExercise: (arg: any) => void;
+  setWorkout: any;
+  workout: WorkoutDataType;
 };
 
 const initialSetState = {
@@ -48,6 +53,8 @@ export const Exercise = ({
   onAddExerciseHandler,
   data,
   setEditExercise,
+  setWorkout,
+  workout,
 }: ExerciseProps) => {
   const { darkMode } = useContext(ThemeContext);
   const [editMode] = useState(data === null ? false : true);

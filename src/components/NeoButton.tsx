@@ -85,7 +85,6 @@ export const NeoButton = ({
   ...rest
 }: IconButtonProps) => {
   const { darkMode } = useContext(ThemeContext);
-  console.log(isLoading);
   return (
     <StyledButton
       type={type}
