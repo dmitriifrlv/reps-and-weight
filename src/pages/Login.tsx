@@ -111,7 +111,7 @@ const Login = () => {
       navigate(from, { replace: true });
     }
   }, [authContext, from, loginResponse, navigate, signupResponse.isSuccess]);
-
+  console.log(process.env);
   return (
     <>
       <FormContainer onSubmit={onSubmitHandler} darkMode={darkMode}>
