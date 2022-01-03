@@ -6,8 +6,6 @@ import {
   AiOutlineSave,
 } from "react-icons/ai";
 import { GiCheckMark } from "react-icons/gi";
-
-import { NeoButton } from "../components/NeoButton";
 import { TabButton } from "./TabButton";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
@@ -129,10 +127,11 @@ export const Layout = ({
           </>
         ) : location.pathname === "/profile" ? (
           <>
-            <NeoButton
+            <TabButton
+              fullWidth
+              onClick={() => navigate("/")}
               icon={<AiOutlineArrowLeft size="1.5rem" />}
               text="Back To Home"
-              onClick={() => navigate("/")}
             />
           </>
         ) : (

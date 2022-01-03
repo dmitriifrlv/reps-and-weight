@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Login, Home, Workout } from "./pages";
+import { Login, Home, Workout, Profile } from "./pages";
 import styled from "@emotion/styled";
 import { useContext } from "react";
 import { ThemeContext } from "./Styles/ThemeContext";
@@ -30,6 +30,14 @@ function App() {
           element={
             <AuthRoute>
               <Home />
+            </AuthRoute>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <AuthRoute>
+              <Profile />
             </AuthRoute>
           }
         />

@@ -5,12 +5,13 @@ type TabButtonProps = {
   text: string;
   icon: JSX.Element;
   onClick: (arg?: any) => void;
+  fullWidth?: boolean;
 };
-const NeoTabButton = styled.button<{ darkMode: boolean }>`
+const NeoTabButton = styled.button<{ darkMode: boolean; fullWidth?: boolean }>`
   cursor: pointer;
   border: none;
   height: 100%;
-  width: 50%;
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "50%")};
   background: transparent;
   color: white;
   display: flex;
@@ -41,9 +42,14 @@ const NeoTabButton = styled.button<{ darkMode: boolean }>`
   }
 `;
 
-export const TabButton = ({ icon, text, onClick }: TabButtonProps) => {
+export const TabButton = ({
+  icon,
+  text,
+  onClick,
+  fullWidth,
+}: TabButtonProps) => {
   return (
-    <NeoTabButton darkMode={true} onClick={onClick}>
+    <NeoTabButton fullWidth={fullWidth} darkMode={true} onClick={onClick}>
       {icon}
       {text}
     </NeoTabButton>
