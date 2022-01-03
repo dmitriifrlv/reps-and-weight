@@ -31,11 +31,12 @@ const AuthContext = createContext(defaultValue);
 const { Provider } = AuthContext;
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
+  const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
   const expiresAt = localStorage.getItem("expiresAt");
 
   const initialAuthState: AuthStateType = {
-    token: null,
+    token,
     expiresAt,
     user: user ? JSON.parse(user) : {},
   };
@@ -43,8 +44,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const [authState, setAuthState] = useState(initialAuthState);
 
   const setAuthInfo = ({ token, user, expiresAt }: AuthStateType) => {
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("expiresAt", expiresAt!);
+    if (token && expiresAt && user) {
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+      localStorage.setItem("expiresAt", expiresAt!);
+    }
     setAuthState({
       token,
       user,
@@ -54,6 +58,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     localStorage.removeItem("expiresAt");
     setAuthState({
       token: null,
@@ -63,7 +68,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   const isAuthenticated = () => {
-    if (!authState.expiresAt) {
+    if (!authState.token || !authState.expiresAt) {
       return false;
     }
     return new Date().getTime() / 1000 < parseInt(authState.expiresAt);

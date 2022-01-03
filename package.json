@@ -54,6 +54,5 @@
   },
   "devDependencies": {
     "prettier": "2.5.1"
-  },
-  "proxy": "https://reps-and-weight.herokuapp.com"
+  }
 }

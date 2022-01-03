@@ -4,6 +4,13 @@ export const rnwApi = createApi({
   reducerPath: "rnw",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        headers.set("authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     signup: builder.mutation({
