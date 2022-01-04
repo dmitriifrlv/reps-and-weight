@@ -55,7 +55,7 @@ export const Calendar = ({ workouts }: CalendarProps) => {
 
     const setNewDate = () => {
       localStorage.setItem("date", JSON.stringify(day));
-      navigate("/workout/add");
+      navigate("/workout");
     };
 
     return (
