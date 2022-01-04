@@ -8,7 +8,6 @@ import { WorkoutDataType } from "../../Types/WorkoutTypes";
 import { FaDumbbell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import calendarClassNames from "./Calendar.module.css";
-
 type CalendarProps = {
   workouts: WorkoutDataType[];
 };

@@ -1,6 +1,5 @@
 .root {
   --container: calc(100vw - 64px - 6px);
-  /* --cell-height: calc(100vh - 64px); */
   --cell-height: calc(100vh - 10rem - 6px);
   --rdp-cell-size: calc(var(--container) / 7);
   --rdp-cell-height: calc(var(--cell-height) / 8);
@@ -18,7 +17,6 @@
 @media (max-width: 768px) {
   .root {
     --container: calc(100vw - 6px);
-    /* --cell-height: calc(100vh - 7rem - 6px); */
   }
 }
 
