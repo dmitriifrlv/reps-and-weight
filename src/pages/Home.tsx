@@ -10,12 +10,9 @@ export const Home = () => {
       {error ? (
         <p>There was an error</p>
       ) : isLoading ? (
-        <p>Warming up ...</p>
+        <CalendarLoadingScreen />
       ) : isSuccess ? (
-        <>
-          <CalendarLoadingScreen />
-          {/* <Calendar workouts={data.workouts} /> */}
-        </>
+        <Calendar workouts={data.workouts} />
       ) : null}
     </Layout>
   );

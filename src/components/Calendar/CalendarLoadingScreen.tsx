@@ -1,7 +1,7 @@
-import ContentLoader, { Facebook } from "react-content-loader";
+import ContentLoader from "react-content-loader";
 import styled from "@emotion/styled";
 
-const Container = styled.div`
+const Container = styled.div<{ darkMode?: boolean }>`
   label: calendarContainer;
   height: calc(100vh - 10rem - 6px);
   width: 100%;
@@ -10,6 +10,8 @@ const Container = styled.div`
     height: 100%;
     width: 100%;
     border-radius: 16px;
+    box-shadow: ${({ darkMode = true, theme }) =>
+      darkMode ? theme.shadows.dark.bsDark : theme.shadows.light.bsLight};
   }
   @media (max-width: 768px) {
     padding: 0;
@@ -25,7 +27,11 @@ const Container = styled.div`
 export const CalendarLoadingScreen = () => {
   return (
     <Container>
-      <ContentLoader backgroundColor={"#2e2e2e"} foregroundColor={"#575757"}>
+      <ContentLoader
+        speed={0.8}
+        backgroundColor={"#232323"}
+        foregroundColor={"#383838"}
+      >
         <rect x="0" y="0" rx="0" ry="0" width="100%" height="100%" />
       </ContentLoader>
     </Container>
