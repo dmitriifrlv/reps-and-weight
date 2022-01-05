@@ -1,4 +1,3 @@
-import React from "react";
 import { Calendar } from "../components/Calendar/Calendar";
 import { Layout } from "../components/Layout";
 import { CalendarLoadingScreen } from "../components/Calendar/CalendarLoadingScreen";

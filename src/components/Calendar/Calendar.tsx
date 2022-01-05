@@ -8,6 +8,7 @@ import { WorkoutDataType } from "../../Types/WorkoutTypes";
 import { FaDumbbell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import calendarClassNames from "./Calendar.module.css";
+
 type CalendarProps = {
   workouts: WorkoutDataType[];
 };
@@ -34,8 +35,11 @@ const CalendarContainer = styled.div`
   }
 `;
 
+const CalendarCell = styled.div`
+  cursor: pointer;
+`;
+
 export const Calendar = ({ workouts }: CalendarProps) => {
-  console.log(workouts);
   const { darkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const formatDay = (day: Date) => {
@@ -62,20 +66,23 @@ export const Calendar = ({ workouts }: CalendarProps) => {
         {foundWorkoutDay?.length > 0 ? (
           <div>
             {foundWorkoutDay?.map((i) => (
-              <div onClick={() => navigate(`/workout/${i._id}`)} key={i._id}>
+              <CalendarCell
+                onClick={() => navigate(`/workout/${i._id}`)}
+                key={i._id}
+              >
                 <p className="calendarDate">{date}</p>
                 <div className="workoutDate">
                   <FaDumbbell />
                 </div>
-              </div>
+              </CalendarCell>
             ))}
           </div>
         ) : (
-          <div>
-            <div className="calendarDate" onClick={setNewDate}>
-              {date}
-            </div>
+          // <div>
+          <div className="calendarDate" onClick={setNewDate}>
+            {date}
           </div>
+          // </div>
         )}
       </>
     );
