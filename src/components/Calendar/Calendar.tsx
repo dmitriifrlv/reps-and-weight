@@ -35,8 +35,11 @@ const CalendarContainer = styled.div`
   }
 `;
 
+const CalendarCell = styled.div`
+  cursor: pointer;
+`;
+
 export const Calendar = ({ workouts }: CalendarProps) => {
-  console.log(workouts);
   const { darkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
   const formatDay = (day: Date) => {
@@ -55,7 +58,7 @@ export const Calendar = ({ workouts }: CalendarProps) => {
 
     const setNewDate = () => {
       localStorage.setItem("date", JSON.stringify(day));
-      navigate("/workout/add");
+      navigate("/workout");
     };
 
     return (
@@ -63,20 +66,23 @@ export const Calendar = ({ workouts }: CalendarProps) => {
         {foundWorkoutDay?.length > 0 ? (
           <div>
             {foundWorkoutDay?.map((i) => (
-              <div onClick={() => navigate(`/workout/${i._id}`)} key={i._id}>
+              <CalendarCell
+                onClick={() => navigate(`/workout/${i._id}`)}
+                key={i._id}
+              >
                 <p className="calendarDate">{date}</p>
                 <div className="workoutDate">
                   <FaDumbbell />
                 </div>
-              </div>
+              </CalendarCell>
             ))}
           </div>
         ) : (
-          <div>
-            <div className="calendarDate" onClick={setNewDate}>
-              {date}
-            </div>
+          // <div>
+          <div className="calendarDate" onClick={setNewDate}>
+            {date}
           </div>
+          // </div>
         )}
       </>
     );

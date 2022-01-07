@@ -4,6 +4,7 @@ import {
   AiOutlineUser,
   AiOutlineArrowLeft,
   AiOutlineSave,
+  AiOutlineDelete,
 } from "react-icons/ai";
 import { GiCheckMark } from "react-icons/gi";
 import { TabButton } from "./TabButton";
@@ -111,7 +112,7 @@ export const Layout = ({
               <>
                 <TabButton
                   onClick={onDeleteWorkoutHandler!}
-                  icon={<AiOutlineSave size="1.5rem" />}
+                  icon={<AiOutlineDelete size="1.5rem" />}
                   text="Delete"
                 />
                 <Divider />

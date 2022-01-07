@@ -50,8 +50,11 @@ body {
   line-height: 1.5;
   font-family: "Baloo Thambi 2", cursive;
   -webkit-font-smoothing: antialiased;
+  color: #2e2e2e;
+  color: hsl(0, 0%, 34%);
 }
-
+/* const dark = "#232323";
+const light = "#f0f0f0"; */
 img,
 canvas,
 svg {
