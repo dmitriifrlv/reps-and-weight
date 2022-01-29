@@ -4,6 +4,7 @@ import MuscleGroupSelector, {
   SelectOptionType,
 } from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 import { WorkoutDataType, ExerciseType } from "../../Types/WorkoutTypes";
+import { WorkoutType, WorkoutActionType } from "./Workout.types";
 import { Exercise } from "./Exercise";
 import { ExerciseCard } from "./ExerciseCard";
 import {
@@ -27,41 +28,6 @@ const initialState: WorkoutDataType = {
   date: new Date(),
   exercises: [],
 };
-
-type WorkoutType = {
-  data?: WorkoutDataType;
-};
-
-type WorkoutActionType =
-  | {
-      type: "loadWorkout";
-      payload: WorkoutDataType;
-    }
-  | {
-      type: "addExercise";
-      payload: ExerciseType;
-    }
-  | {
-      type: "editExercise";
-      payload: ExerciseType;
-      initialState: ExerciseType;
-    }
-  | {
-      type: "deleteExercise";
-      payload: ExerciseType;
-    }
-  | {
-      type: "dateChange";
-      payload: Date;
-    }
-  | {
-      type: "muscleGroupsChange";
-      payload: string[];
-    }
-  | {
-      type: "deleteExercise";
-      payload: ExerciseType;
-    };
 
 const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
   switch (action.type) {
