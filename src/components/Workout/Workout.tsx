@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useReducer } from "react";
 import { Layout } from "../Layout";
 import MuscleGroupSelector from "../../components/MuscleGroupSelector/MuscleGroupSelector";
-import { WorkoutDataType } from "../../Types/WorkoutTypes";
+import { WorkoutDataType, ExerciseType } from "../../Types/WorkoutTypes";
 import { Exercise } from "./Exercise";
 import { ExerciseCard } from "./ExerciseCard";
 import {
@@ -30,12 +30,40 @@ type WorkoutType = {
   data?: WorkoutDataType;
 };
 
+type WorkoutActionType =
+  | {
+      type: "loadWorkout";
+      payload: WorkoutDataType;
+    }
+  | {
+      type: "addExercise";
+      payload: ExerciseType;
+    }
+  | {
+      type: "editExercise";
+      payload: ExerciseType;
+    }
+  | {
+      type: "deleteExercise";
+      payload: ExerciseType;
+    };
+
+const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
+  switch (action.type) {
+    case "loadWorkout":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 const Workout = ({ data }: WorkoutType) => {
   const navigate = useNavigate();
   const params = useParams();
   const editMode = Boolean(params.workoutId);
   const [exercisePage, setExercisePage] = useState(false);
-  const [workout, setWorkout] = useState(() => data ?? initialState);
+  // const [workout, setWorkout] = useState(() => data ?? initialState);
+  const [workout, dispatchWorkout] = useReducer(workoutReducer, initialState);
   const [editExercise, setEditExercise] = useState<any | null>(null);
   const { darkMode } = useContext(ThemeContext);
   const [addWorkout, addWorkoutResponse] = useAddWorkoutMutation();
@@ -45,7 +73,7 @@ const Workout = ({ data }: WorkoutType) => {
   const onAddExerciseHandler = (exercise: any) => {
     const newExercises = [...workout.exercises];
     newExercises.push(exercise);
-    setWorkout((prevState) => ({ ...prevState, exercises: newExercises }));
+    // setWorkout((prevState) => ({ ...prevState, exercises: newExercises }));
     setExercisePage(false);
   };
 
@@ -76,7 +104,7 @@ const Workout = ({ data }: WorkoutType) => {
 
   useEffect(() => {
     if (data) {
-      setWorkout(data);
+      dispatchWorkout({ type: "loadWorkout", payload: data });
     }
   }, [data]);
 
@@ -86,7 +114,8 @@ const Workout = ({ data }: WorkoutType) => {
         onAddExerciseHandler={onAddExerciseHandler}
         setExercisePage={setExercisePage}
         data={editExercise}
-        setWorkout={setWorkout}
+        // setWorkout={setWorkout}
+        setWorkout={() => console.log("hi")}
         workout={workout}
         setEditExercise={setEditExercise}
       />
@@ -118,8 +147,9 @@ const Workout = ({ data }: WorkoutType) => {
                     ? new Date(workout.date)
                     : workout.date
                 }
-                onChange={(date: Date) =>
-                  setWorkout((prevState) => ({ ...prevState, date: date }))
+                onChange={
+                  (date: Date) => console.log(date)
+                  // setWorkout((prevState) => ({ ...prevState, date: date }))
                 }
               />
             </InputContainer>
@@ -130,10 +160,11 @@ const Workout = ({ data }: WorkoutType) => {
                   const muscleGroups = values.map(
                     (muscleGroup: any) => muscleGroup.value
                   );
-                  setWorkout((prevState) => ({
-                    ...prevState,
-                    muscleGroups: muscleGroups,
-                  }));
+                  console.log("hi");
+                  // setWorkout((prevState) => ({
+                  //   ...prevState,
+                  //   muscleGroups: muscleGroups,
+                  // }));
                 }}
               />
             </InputContainer>
