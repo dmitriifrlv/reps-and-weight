@@ -3,8 +3,8 @@
   --cell-height: calc(100vh - 10rem - 6px);
   --rdp-cell-size: calc(var(--container) / 7);
   --rdp-cell-height: calc(var(--cell-height) / 8);
-  --rdp-accent-color: #0000ff;
-  --rdp-background-color: #e7edff;
+  --rdp-accent-color: #44445a;
+  --rdp-background-color: #424449;
   /* Switch to dark colors for dark themes */
   --rdp-accent-color-dark: #3003e1;
   --rdp-background-color-dark: #180270;
