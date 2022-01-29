@@ -32,6 +32,7 @@ const ExerciseRow = styled.div`
 
 type ExerciseProps = {
   setExercisePage: (arg: boolean) => void;
+  onDeleteExerciseHandler: (arg: ExerciseType) => void;
   onAddExerciseHandler: (arg: ExerciseType) => void;
   onEditExerciseHandler: (arg: ExerciseType, arg2: ExerciseType) => void;
   data: ExerciseType;
@@ -49,6 +50,7 @@ export const Exercise = ({
   onEditExerciseHandler,
   data,
   setEditExercise,
+  onDeleteExerciseHandler,
 }: ExerciseProps) => {
   const { darkMode } = useContext(ThemeContext);
   const [editMode] = useState(data === null ? false : true);
@@ -92,6 +94,7 @@ export const Exercise = ({
 
   return (
     <Layout
+      onDeleteExerciseHandler={() => onDeleteExerciseHandler(data)}
       exercisePage={true}
       setExercisePage={setExercisePage}
       onAddExerciseHandler={() =>
