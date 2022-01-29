@@ -47,6 +47,10 @@ type WorkoutActionType =
   | {
       type: "deleteExercise";
       payload: ExerciseType;
+    }
+  | {
+      type: "dateChange";
+      payload: Date;
     };
 
 const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
@@ -71,6 +75,8 @@ const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
         return { ...state, exercises };
       }
       return state;
+    case "dateChange":
+      return { ...state, date: action.payload };
     default:
       return state;
   }
@@ -174,9 +180,8 @@ const Workout = ({ data }: WorkoutType) => {
                     ? new Date(workout.date)
                     : workout.date
                 }
-                onChange={
-                  (date: Date) => console.log(date)
-                  // setWorkout((prevState) => ({ ...prevState, date: date }))
+                onChange={(date: Date) =>
+                  dispatchWorkout({ type: "dateChange", payload: date })
                 }
               />
             </InputContainer>
