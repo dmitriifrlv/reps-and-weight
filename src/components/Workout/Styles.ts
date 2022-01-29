@@ -14,7 +14,7 @@ const WorkoutContainer = styled.div`
 `;
 
 const WorkoutCard = styled.div<CardProps>`
-  width: 500px;
+  width: 80%;
   height: 80%;
   box-shadow: ${({ darkMode, theme }) =>
     darkMode ? theme.shadows.dark.bsDark : theme.shadows.light.bsLight};

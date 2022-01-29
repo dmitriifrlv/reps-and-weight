@@ -147,7 +147,6 @@ const Workout = ({ data }: WorkoutType) => {
       exercisePage={exercisePage}
       setExercisePage={setExercisePage}
       goToExercisePage={() => setExercisePage(true)}
-      editMode={editMode}
       loading={
         editMode
           ? updateWorkoutResponse.isLoading

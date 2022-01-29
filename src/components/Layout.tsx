@@ -17,7 +17,6 @@ type LayoutProps = {
   onDeleteExerciseHandler?: (exercise: any) => void;
   goToExercisePage?: () => void;
   loading?: boolean;
-  editMode?: boolean;
   exercisePage?: boolean;
   setExercisePage?: (arg: boolean) => void;
   returnFromExercise?: () => void;
@@ -49,7 +48,6 @@ export const Layout = ({
   onSaveWorkoutHandler,
   loading,
   children,
-  editMode,
   onAddExerciseHandler,
   exercisePage,
   setExercisePage,
