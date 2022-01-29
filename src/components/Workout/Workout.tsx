@@ -42,17 +42,6 @@ const Workout = ({ data }: WorkoutType) => {
   const [deleteWorkout, deleteWorkoutResponse] = useDeleteWorkoutMutation();
   const [updateWorkout, updateWorkoutResponse] = useUpdateWorkoutMutation();
 
-  const ExampleCustomInput = React.forwardRef<any, any>(
-    ({ value, onClick }: any, ref) => {
-      return (
-        <div onClick={onClick} ref={ref}>
-          {value}
-        </div>
-      );
-    }
-  );
-  ExampleCustomInput.displayName = "picker";
-
   const onAddExerciseHandler = (exercise: any) => {
     const newExercises = [...workout.exercises];
     newExercises.push(exercise);
@@ -90,16 +79,20 @@ const Workout = ({ data }: WorkoutType) => {
       setWorkout(data);
     }
   }, [data]);
-  return exercisePage ? (
-    <Exercise
-      onAddExerciseHandler={onAddExerciseHandler}
-      setExercisePage={setExercisePage}
-      data={editExercise}
-      setWorkout={setWorkout}
-      workout={workout}
-      setEditExercise={setEditExercise}
-    />
-  ) : (
+
+  if (exercisePage) {
+    return (
+      <Exercise
+        onAddExerciseHandler={onAddExerciseHandler}
+        setExercisePage={setExercisePage}
+        data={editExercise}
+        setWorkout={setWorkout}
+        workout={workout}
+        setEditExercise={setEditExercise}
+      />
+    );
+  }
+  return (
     <Layout
       exercisePage={exercisePage}
       setExercisePage={setExercisePage}

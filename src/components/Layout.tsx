@@ -58,8 +58,8 @@ export const Layout = ({
 }: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(exercisePage);
   const params = useParams();
+
   return (
     <LayoutContainer>
       <AppContainer>{children}</AppContainer>
