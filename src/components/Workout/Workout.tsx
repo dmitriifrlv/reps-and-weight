@@ -42,6 +42,7 @@ type WorkoutActionType =
   | {
       type: "editExercise";
       payload: ExerciseType;
+      initialState: ExerciseType;
     }
   | {
       type: "deleteExercise";
@@ -56,6 +57,20 @@ const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
       const newExercises = [...state.exercises];
       newExercises.push(action.payload);
       return { ...state, exercises: newExercises };
+    case "editExercise":
+      const exercises = [...state.exercises];
+      const editedExercise = exercises.find(
+        (exercise) => exercise === action.initialState
+      );
+      const editedExerciseIdx = exercises.findIndex(
+        (exercise) => exercise === action.initialState
+      );
+      if (editedExerciseIdx !== -1 && editedExercise) {
+        const newExercise = { ...editedExercise, ...action.payload };
+        exercises.splice(editedExerciseIdx, 1, newExercise);
+        return { ...state, exercises };
+      }
+      return state;
     default:
       return state;
   }
@@ -66,7 +81,6 @@ const Workout = ({ data }: WorkoutType) => {
   const params = useParams();
   const editMode = Boolean(params.workoutId);
   const [exercisePage, setExercisePage] = useState(false);
-  // const [workout, setWorkout] = useState(() => data ?? initialState);
   const [workout, dispatchWorkout] = useReducer(workoutReducer, initialState);
   const [editExercise, setEditExercise] = useState<any | null>(null);
   const { darkMode } = useContext(ThemeContext);
@@ -76,6 +90,18 @@ const Workout = ({ data }: WorkoutType) => {
 
   const onAddExerciseHandler = (exercise: ExerciseType) => {
     dispatchWorkout({ type: "addExercise", payload: exercise });
+    setExercisePage(false);
+  };
+
+  const onEditExerciseHandler = (
+    exercise: ExerciseType,
+    initialObj: ExerciseType
+  ) => {
+    dispatchWorkout({
+      type: "editExercise",
+      payload: exercise,
+      initialState: initialObj,
+    });
     setExercisePage(false);
   };
 
@@ -114,15 +140,14 @@ const Workout = ({ data }: WorkoutType) => {
     return (
       <Exercise
         onAddExerciseHandler={onAddExerciseHandler}
+        onEditExerciseHandler={onEditExerciseHandler}
         setExercisePage={setExercisePage}
         data={editExercise}
-        // setWorkout={setWorkout}
-        setWorkout={() => console.log("hi")}
-        workout={workout}
         setEditExercise={setEditExercise}
       />
     );
   }
+
   return (
     <Layout
       exercisePage={exercisePage}

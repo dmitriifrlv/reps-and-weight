@@ -36,11 +36,10 @@ const ExerciseRow = styled.div`
 
 type ExerciseProps = {
   setExercisePage: (arg: boolean) => void;
-  onAddExerciseHandler: (arg: any) => void;
+  onAddExerciseHandler: (arg: ExerciseType) => void;
+  onEditExerciseHandler: (arg: ExerciseType, arg2: ExerciseType) => void;
   data: ExerciseType;
   setEditExercise: (arg: any) => void;
-  setWorkout: any;
-  workout: WorkoutDataType;
 };
 
 const initialSetState = {
@@ -51,10 +50,9 @@ const initialSetState = {
 export const Exercise = ({
   setExercisePage,
   onAddExerciseHandler,
+  onEditExerciseHandler,
   data,
   setEditExercise,
-  setWorkout,
-  workout,
 }: ExerciseProps) => {
   const { darkMode } = useContext(ThemeContext);
   const [editMode] = useState(data === null ? false : true);
@@ -72,9 +70,10 @@ export const Exercise = ({
   const onDeleteSetHandler = (setToDelete: SetType) =>
     setSets(sets.filter((set) => set !== setToDelete));
 
-  const onEditExerciseHandler = () => {
-    data.exercise = exercise;
-    data.sets = sets;
+  const editExerciseHandler = () => {
+    onEditExerciseHandler({ exercise, sets }, data);
+    // data.exercise = exercise;
+    // data.sets = sets;
     setExercisePage(false);
     setEditExercise(null);
   };
@@ -103,7 +102,7 @@ export const Exercise = ({
       setExercisePage={setExercisePage}
       onAddExerciseHandler={() =>
         editMode
-          ? onEditExerciseHandler()
+          ? editExerciseHandler()
           : onAddExerciseHandler({ exercise, sets })
       }
       returnFromExercise={() => {

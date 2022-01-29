@@ -5,8 +5,8 @@ type SetType = {
 };
 type ExerciseType = {
   sets: SetType[];
-  _id: string;
-  measure: string;
+  _id?: string;
+  measure?: string;
   exercise: string;
 };
 
