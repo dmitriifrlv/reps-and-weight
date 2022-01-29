@@ -14,6 +14,7 @@ type LayoutProps = {
   children: React.ReactNode;
   onSaveWorkoutHandler?: () => void;
   onAddExerciseHandler?: (exercise: any) => void;
+  onDeleteExerciseHandler?: (exercise: any) => void;
   goToExercisePage?: () => void;
   loading?: boolean;
   editMode?: boolean;
@@ -55,6 +56,7 @@ export const Layout = ({
   goToExercisePage,
   returnFromExercise,
   onDeleteWorkoutHandler,
+  onDeleteExerciseHandler,
 }: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -94,6 +96,16 @@ export const Layout = ({
                   onClick={goToExercisePage!}
                   icon={<AiOutlinePlus size="1.5rem" />}
                   text="Exercise"
+                />
+                <Divider />
+              </>
+            )}
+            {exercisePage && (
+              <>
+                <TabButton
+                  onClick={onDeleteExerciseHandler!}
+                  icon={<AiOutlineDelete size="1.5rem" />}
+                  text="Delete"
                 />
                 <Divider />
               </>

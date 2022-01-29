@@ -12,6 +12,7 @@ export const rnwApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ["workouts"],
   endpoints: (builder) => ({
     signup: builder.mutation({
       query: (payload) => ({
@@ -29,6 +30,7 @@ export const rnwApi = createApi({
     }),
     getUserInfo: builder.query<any, void>({
       query: () => "user",
+      providesTags: ["workouts"],
     }),
     getWorkout: builder.query<any, string>({
       query: (workoutId) => `workout/${workoutId}`,
@@ -39,6 +41,7 @@ export const rnwApi = createApi({
         method: "POST",
         body: payload,
       }),
+      invalidatesTags: ["workouts"],
     }),
     updateWorkout: builder.mutation({
       query: (payload) => {
@@ -48,12 +51,14 @@ export const rnwApi = createApi({
           body: payload.payload,
         };
       },
+      invalidatesTags: ["workouts"],
     }),
     deleteWorkout: builder.mutation({
       query: (id) => ({
         url: `workout/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["workouts"],
     }),
   }),
 });

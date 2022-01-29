@@ -1,7 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useReducer } from "react";
 import { Layout } from "../Layout";
-import MuscleGroupSelector from "../../components/MuscleGroupSelector/MuscleGroupSelector";
-import { WorkoutDataType } from "../../Types/WorkoutTypes";
+import MuscleGroupSelector, {
+  SelectOptionType,
+} from "../../components/MuscleGroupSelector/MuscleGroupSelector";
+import { WorkoutDataType, ExerciseType } from "../../Types/WorkoutTypes";
+import { WorkoutType, WorkoutActionType } from "./Workout.types";
 import { Exercise } from "./Exercise";
 import { ExerciseCard } from "./ExerciseCard";
 import {
@@ -26,8 +29,40 @@ const initialState: WorkoutDataType = {
   exercises: [],
 };
 
-type WorkoutType = {
-  data?: WorkoutDataType;
+const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
+  switch (action.type) {
+    case "loadWorkout":
+      return action.payload;
+    case "deleteExercise":
+      const updatedExercises = [...state.exercises].filter(
+        (exercise) => exercise !== action.payload
+      );
+      return { ...state, exercises: updatedExercises };
+    case "addExercise":
+      const newExercises = [...state.exercises];
+      newExercises.push(action.payload);
+      return { ...state, exercises: newExercises };
+    case "editExercise":
+      const exercises = [...state.exercises];
+      const editedExercise = exercises.find(
+        (exercise) => exercise === action.initialState
+      );
+      const editedExerciseIdx = exercises.findIndex(
+        (exercise) => exercise === action.initialState
+      );
+      if (editedExerciseIdx !== -1 && editedExercise) {
+        const newExercise = { ...editedExercise, ...action.payload };
+        exercises.splice(editedExerciseIdx, 1, newExercise);
+        return { ...state, exercises };
+      }
+      return state;
+    case "dateChange":
+      return { ...state, date: action.payload };
+    case "muscleGroupsChange":
+      return { ...state, muscleGroups: action.payload };
+    default:
+      return state;
+  }
 };
 
 const Workout = ({ data }: WorkoutType) => {
@@ -35,17 +70,31 @@ const Workout = ({ data }: WorkoutType) => {
   const params = useParams();
   const editMode = Boolean(params.workoutId);
   const [exercisePage, setExercisePage] = useState(false);
-  const [workout, setWorkout] = useState(() => data ?? initialState);
+  const [workout, dispatchWorkout] = useReducer(workoutReducer, initialState);
   const [editExercise, setEditExercise] = useState<any | null>(null);
   const { darkMode } = useContext(ThemeContext);
   const [addWorkout, addWorkoutResponse] = useAddWorkoutMutation();
   const [deleteWorkout, deleteWorkoutResponse] = useDeleteWorkoutMutation();
   const [updateWorkout, updateWorkoutResponse] = useUpdateWorkoutMutation();
 
-  const onAddExerciseHandler = (exercise: any) => {
-    const newExercises = [...workout.exercises];
-    newExercises.push(exercise);
-    setWorkout((prevState) => ({ ...prevState, exercises: newExercises }));
+  const onAddExerciseHandler = (exercise: ExerciseType) => {
+    dispatchWorkout({ type: "addExercise", payload: exercise });
+    setExercisePage(false);
+  };
+  const onDeleteExerciseHandler = (exercise: ExerciseType) => {
+    dispatchWorkout({ type: "deleteExercise", payload: exercise });
+    setExercisePage(false);
+  };
+
+  const onEditExerciseHandler = (
+    exercise: ExerciseType,
+    initialObj: ExerciseType
+  ) => {
+    dispatchWorkout({
+      type: "editExercise",
+      payload: exercise,
+      initialState: initialObj,
+    });
     setExercisePage(false);
   };
 
@@ -76,7 +125,7 @@ const Workout = ({ data }: WorkoutType) => {
 
   useEffect(() => {
     if (data) {
-      setWorkout(data);
+      dispatchWorkout({ type: "loadWorkout", payload: data });
     }
   }, [data]);
 
@@ -84,14 +133,15 @@ const Workout = ({ data }: WorkoutType) => {
     return (
       <Exercise
         onAddExerciseHandler={onAddExerciseHandler}
+        onEditExerciseHandler={onEditExerciseHandler}
+        onDeleteExerciseHandler={onDeleteExerciseHandler}
         setExercisePage={setExercisePage}
         data={editExercise}
-        setWorkout={setWorkout}
-        workout={workout}
         setEditExercise={setEditExercise}
       />
     );
   }
+
   return (
     <Layout
       exercisePage={exercisePage}
@@ -119,7 +169,7 @@ const Workout = ({ data }: WorkoutType) => {
                     : workout.date
                 }
                 onChange={(date: Date) =>
-                  setWorkout((prevState) => ({ ...prevState, date: date }))
+                  dispatchWorkout({ type: "dateChange", payload: date })
                 }
               />
             </InputContainer>
@@ -128,12 +178,12 @@ const Workout = ({ data }: WorkoutType) => {
                 showMuscleGroups={workout.muscleGroups}
                 onChange={(values) => {
                   const muscleGroups = values.map(
-                    (muscleGroup: any) => muscleGroup.value
+                    (muscleGroup: SelectOptionType) => muscleGroup.value
                   );
-                  setWorkout((prevState) => ({
-                    ...prevState,
-                    muscleGroups: muscleGroups,
-                  }));
+                  dispatchWorkout({
+                    type: "muscleGroupsChange",
+                    payload: muscleGroups,
+                  });
                 }}
               />
             </InputContainer>
