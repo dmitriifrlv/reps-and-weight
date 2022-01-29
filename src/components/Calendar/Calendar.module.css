@@ -3,7 +3,7 @@
   --cell-height: calc(100vh - 10rem - 6px);
   --rdp-cell-size: calc(var(--container) / 7);
   --rdp-cell-height: calc(var(--cell-height) / 8);
-  --rdp-accent-color: #44445a;
+  --rdp-accent-color: #f0f0f0;
   --rdp-background-color: #424449;
   /* Switch to dark colors for dark themes */
   --rdp-accent-color-dark: #3003e1;
@@ -129,7 +129,7 @@
   display: inline-flex;
   align-items: center;
   margin: 0;
-  padding: 0 0.25em;
+  padding: 0 1rem;
   white-space: nowrap;
   color: currentColor;
   border: 0;
@@ -141,6 +141,8 @@
 
 .nav {
   white-space: nowrap;
+  display: flex;
+  gap: 8px;
 }
 
 .multiple_months .caption_first .nav {
@@ -161,12 +163,12 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* width: fit-content;
-  height: fit-content; */
-  width: var(--rdp-cell-size);
+  width: calc(var(--rdp-cell-height));
+  /* height: calc(var(--rdp-cell-size) / 2); */
   height: var(--rdp-cell-height);
   padding: 0.25em;
   border-radius: 100%;
+  /* border: 1px solid red; */
 }
 
 /* ---------- */
@@ -227,7 +229,7 @@
 .head_cell {
   vertical-align: middle;
   text-transform: uppercase;
-  font-size: 0.75em;
+  font-size: 1rem;
   font-weight: 700;
   text-align: center;
   height: 100%;
