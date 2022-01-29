@@ -52,6 +52,10 @@ const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
   switch (action.type) {
     case "loadWorkout":
       return action.payload;
+    case "addExercise":
+      const newExercises = [...state.exercises];
+      newExercises.push(action.payload);
+      return { ...state, exercises: newExercises };
     default:
       return state;
   }
@@ -70,10 +74,8 @@ const Workout = ({ data }: WorkoutType) => {
   const [deleteWorkout, deleteWorkoutResponse] = useDeleteWorkoutMutation();
   const [updateWorkout, updateWorkoutResponse] = useUpdateWorkoutMutation();
 
-  const onAddExerciseHandler = (exercise: any) => {
-    const newExercises = [...workout.exercises];
-    newExercises.push(exercise);
-    // setWorkout((prevState) => ({ ...prevState, exercises: newExercises }));
+  const onAddExerciseHandler = (exercise: ExerciseType) => {
+    dispatchWorkout({ type: "addExercise", payload: exercise });
     setExercisePage(false);
   };
 
