@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState, useReducer } from "react";
 import { Layout } from "../Layout";
-import MuscleGroupSelector from "../../components/MuscleGroupSelector/MuscleGroupSelector";
+import MuscleGroupSelector, {
+  SelectOptionType,
+} from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 import { WorkoutDataType, ExerciseType } from "../../Types/WorkoutTypes";
 import { Exercise } from "./Exercise";
 import { ExerciseCard } from "./ExerciseCard";
@@ -51,6 +53,10 @@ type WorkoutActionType =
   | {
       type: "dateChange";
       payload: Date;
+    }
+  | {
+      type: "muscleGroupsChange";
+      payload: string[];
     };
 
 const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
@@ -77,6 +83,8 @@ const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
       return state;
     case "dateChange":
       return { ...state, date: action.payload };
+    case "muscleGroupsChange":
+      return { ...state, muscleGroups: action.payload };
     default:
       return state;
   }
@@ -190,13 +198,12 @@ const Workout = ({ data }: WorkoutType) => {
                 showMuscleGroups={workout.muscleGroups}
                 onChange={(values) => {
                   const muscleGroups = values.map(
-                    (muscleGroup: any) => muscleGroup.value
+                    (muscleGroup: SelectOptionType) => muscleGroup.value
                   );
-                  console.log("hi");
-                  // setWorkout((prevState) => ({
-                  //   ...prevState,
-                  //   muscleGroups: muscleGroups,
-                  // }));
+                  dispatchWorkout({
+                    type: "muscleGroupsChange",
+                    payload: muscleGroups,
+                  });
                 }}
               />
             </InputContainer>

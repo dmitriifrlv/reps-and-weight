@@ -2,11 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import styled from "@emotion/styled";
 import { nanoid } from "nanoid";
-import {
-  ExerciseType,
-  WorkoutDataType,
-  SetType,
-} from "../../Types/WorkoutTypes";
+import { ExerciseType, SetType } from "../../Types/WorkoutTypes";
 import { NeoInput } from "../NeoInput";
 import { IconButton } from "../IconButton";
 import { WorkoutContainer, WorkoutCard } from "./Styles";
@@ -72,8 +68,6 @@ export const Exercise = ({
 
   const editExerciseHandler = () => {
     onEditExerciseHandler({ exercise, sets }, data);
-    // data.exercise = exercise;
-    // data.sets = sets;
     setExercisePage(false);
     setEditExercise(null);
   };

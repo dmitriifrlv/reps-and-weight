@@ -4,11 +4,11 @@ import makeAnimated from "react-select/animated";
 import { ThemeContext } from "../../Styles/ThemeContext";
 import { useTheme } from "@emotion/react";
 
-type MyOptionType = { value: string; label: string };
+export type SelectOptionType = { value: string; label: string };
 
 const animatedComponents = makeAnimated();
 
-const options: MyOptionType[] = [
+const options: SelectOptionType[] = [
   { value: "Chest", label: "Chest" },
   { value: "Back", label: "Back" },
   { value: "Triceps", label: "Triceps" },
@@ -22,7 +22,7 @@ const options: MyOptionType[] = [
 
 type MuscleGroupSelectorProps = {
   showMuscleGroups: string[];
-  onChange?: (value: MyOptionType | any) => void;
+  onChange?: (value: SelectOptionType | any) => void;
 };
 
 export default function MuscleGroupSelector({
