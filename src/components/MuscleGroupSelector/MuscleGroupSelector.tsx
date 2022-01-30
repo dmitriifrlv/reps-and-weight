@@ -47,6 +47,7 @@ export default function MuscleGroupSelector({
         ? theme.shadows.dark.bsDarkInset
         : theme.shadows.light.bsLightInset,
       transition: "background 0ms",
+      cursor: "pointer",
     }),
     menu: (provided: {}, state: {}) => ({
       ...provided,
@@ -63,6 +64,7 @@ export default function MuscleGroupSelector({
           ? theme.colors.dark
           : "inherit"
         : "inherit",
+      cursor: "pointer",
     }),
     valueContainer: (provided: {}, state: {}) => ({
       ...provided,

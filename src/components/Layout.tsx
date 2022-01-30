@@ -88,12 +88,12 @@ export const Layout = ({
               }
             />
             <Divider />
-            {!exercisePage && (
+            {params.workoutId && !exercisePage && (
               <>
                 <TabButton
-                  onClick={goToExercisePage!}
-                  icon={<AiOutlinePlus size="1.5rem" />}
-                  text="Exercise"
+                  onClick={onDeleteWorkoutHandler!}
+                  icon={<AiOutlineDelete size="1.5rem" />}
+                  text="Delete"
                 />
                 <Divider />
               </>
@@ -108,6 +108,17 @@ export const Layout = ({
                 <Divider />
               </>
             )}
+            {!exercisePage && (
+              <>
+                <TabButton
+                  onClick={goToExercisePage!}
+                  icon={<AiOutlinePlus size="1.5rem" />}
+                  text="Exercise"
+                />
+                <Divider />
+              </>
+            )}
+
             {exercisePage && (
               <>
                 <TabButton
@@ -118,16 +129,7 @@ export const Layout = ({
                 <Divider />
               </>
             )}
-            {params.workoutId && !exercisePage && (
-              <>
-                <TabButton
-                  onClick={onDeleteWorkoutHandler!}
-                  icon={<AiOutlineDelete size="1.5rem" />}
-                  text="Delete"
-                />
-                <Divider />
-              </>
-            )}
+
             {!exercisePage && (
               <TabButton
                 onClick={onSaveWorkoutHandler!}
