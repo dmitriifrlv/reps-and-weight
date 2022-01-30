@@ -78,11 +78,7 @@ export const Calendar = ({ workouts }: CalendarProps) => {
             ))}
           </div>
         ) : (
-          // <div>
-          <div className="calendarDate" onClick={setNewDate}>
-            {date}
-          </div>
-          // </div>
+          <CalendarCell onClick={setNewDate}>{date}</CalendarCell>
         )}
       </>
     );

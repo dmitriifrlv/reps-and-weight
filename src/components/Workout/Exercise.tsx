@@ -22,6 +22,7 @@ const SetsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding-top: 4px;
 `;
 
 const ExerciseRow = styled.div`
@@ -106,7 +107,6 @@ export const Exercise = ({
         setExercisePage(false);
         setEditExercise(null);
       }}
-      editMode={editMode}
     >
       <WorkoutContainer>
         <WorkoutCard darkMode={darkMode}>

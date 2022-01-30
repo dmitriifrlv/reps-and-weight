@@ -24,16 +24,18 @@ const StyledInput = styled.input`
   width: 100%;
   border-radius: 1rem;
   padding-left: 1rem;
-  border: none;
-  outline: none;
   appearance: none;
   background-color: #232323;
   box-shadow: inset -5px -5px 10px #292828, inset 5px 5px 10px #171717;
-  border: none;
   color: #f0f0f0;
 
+  border: 1px solid transparent;
+  outline: transparent solid 2px;
+  outline-offset: 2px;
   &:focus {
-    outline: 1px solid rgb(73, 73, 73);
+    z-index: 1;
+    border-color: rgb(99, 179, 237);
+    box-shadow: rgb(99 179 237) 0px 0px 0px 1px;
   }
 `;
 

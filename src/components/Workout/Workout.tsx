@@ -129,6 +129,17 @@ const Workout = ({ data }: WorkoutType) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    const date = localStorage.getItem("date");
+    if (date) {
+      dispatchWorkout({
+        type: "dateChange",
+        payload: new Date(JSON.parse(date)),
+      });
+    }
+    return () => localStorage.removeItem("date");
+  }, []);
+
   if (exercisePage) {
     return (
       <Exercise
@@ -147,7 +158,6 @@ const Workout = ({ data }: WorkoutType) => {
       exercisePage={exercisePage}
       setExercisePage={setExercisePage}
       goToExercisePage={() => setExercisePage(true)}
-      editMode={editMode}
       loading={
         editMode
           ? updateWorkoutResponse.isLoading
