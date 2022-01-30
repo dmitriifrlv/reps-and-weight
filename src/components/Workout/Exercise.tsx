@@ -31,6 +31,17 @@ const ExerciseRow = styled.div`
   gap: 2rem;
 `;
 
+const CreatingNewSetContainer = styled.div`
+  label: CreatingNewSetContainer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  p {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+`;
+
 type ExerciseProps = {
   setExercisePage: (arg: boolean) => void;
   onDeleteExerciseHandler: (arg: ExerciseType) => void;
@@ -148,34 +159,37 @@ export const Exercise = ({
                 />
               </ExerciseRow>
             ))}
-            <ExerciseRow>
-              <NeoInput
-                placeholder="Reps"
-                value={set.reps}
-                type="number"
-                onChange={(event) =>
-                  setSet((prevValue) => ({
-                    ...prevValue,
-                    reps: parseInt(event.target.value, 10),
-                  }))
-                }
-              />
-              <NeoInput
-                placeholder="Weight"
-                value={set.weight}
-                type="number"
-                onChange={(event) =>
-                  setSet((prevValue) => ({
-                    ...prevValue,
-                    weight: parseInt(event.target.value, 10),
-                  }))
-                }
-              />
-              <IconButton
-                icon={<AiOutlinePlus size="1.5rem" />}
-                onClick={onAddSetHandler}
-              />
-            </ExerciseRow>
+            <CreatingNewSetContainer>
+              <p>Creating new set:</p>
+              <ExerciseRow>
+                <NeoInput
+                  placeholder="Reps"
+                  value={set.reps}
+                  type="number"
+                  onChange={(event) =>
+                    setSet((prevValue) => ({
+                      ...prevValue,
+                      reps: parseInt(event.target.value, 10),
+                    }))
+                  }
+                />
+                <NeoInput
+                  placeholder="Weight"
+                  value={set.weight}
+                  type="number"
+                  onChange={(event) =>
+                    setSet((prevValue) => ({
+                      ...prevValue,
+                      weight: parseInt(event.target.value, 10),
+                    }))
+                  }
+                />
+                <IconButton
+                  icon={<AiOutlinePlus size="1.5rem" />}
+                  onClick={onAddSetHandler}
+                />
+              </ExerciseRow>
+            </CreatingNewSetContainer>
           </SetsContainer>
         </WorkoutCard>
       </WorkoutContainer>
