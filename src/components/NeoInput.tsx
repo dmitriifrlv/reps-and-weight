@@ -28,15 +28,33 @@ const StyledInput = styled.input`
   background-color: #232323;
   box-shadow: inset -5px -5px 10px #292828, inset 5px 5px 10px #171717;
   color: #f0f0f0;
-
   border: 1px solid transparent;
   outline: transparent solid 2px;
   outline-offset: 2px;
   &:focus {
-    z-index: 1;
     border-color: rgb(99, 179, 237);
     box-shadow: rgb(99 179 237) 0px 0px 0px 1px;
   }
+
+  &:focus ~ label,
+  &:valid ~ label {
+    top: 0px;
+    font-size: 14px;
+    color: #4285f4;
+    color: #5186f8;
+    color: #5d8ef8;
+    color: #90b1f9;
+    font-weight: 500;
+  }
+`;
+
+const StyledLabel = styled.label`
+  position: absolute;
+  pointer-events: none;
+  transition: 0.2s ease all;
+  left: 16px;
+  top: 17px;
+  font-size: 1.125rem;
 `;
 
 const InputIcon = styled.span`
@@ -66,12 +84,14 @@ export const NeoInput = ({
         value={value}
         onChange={onChange}
         inputMode={type === "number" ? "decimal" : undefined}
-        pattern={type === "number" ? "[0-9]*(.[0-9]+)?" : ""}
+        pattern={type === "number" ? "[0-9]*(.[0-9]+)?" : undefined}
         placeholder={placeholder}
         autoComplete="off"
         autoCorrect="off"
         type={type === "password" ? (hidePassword ? "password" : "text") : type}
+        required
       />
+      <StyledLabel>{placeholder}</StyledLabel>
       {type === "password" && (
         <InputIcon onClick={() => setHidePassword(!hidePassword)}>
           {hidePassword ? (

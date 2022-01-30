@@ -126,7 +126,7 @@ export const Exercise = ({
             {sets.map((set) => (
               <ExerciseRow key={set.id}>
                 <NeoInput
-                  placeholder="reps"
+                  placeholder="Reps"
                   value={set.reps}
                   type="number"
                   onChange={(event) =>
@@ -134,7 +134,7 @@ export const Exercise = ({
                   }
                 />
                 <NeoInput
-                  placeholder="reps"
+                  placeholder="Weight"
                   value={set.weight}
                   type="number"
                   onChange={(event) =>
@@ -150,7 +150,7 @@ export const Exercise = ({
             ))}
             <ExerciseRow>
               <NeoInput
-                placeholder="reps"
+                placeholder="Reps"
                 value={set.reps}
                 type="number"
                 onChange={(event) =>
@@ -161,7 +161,7 @@ export const Exercise = ({
                 }
               />
               <NeoInput
-                placeholder="weight"
+                placeholder="Weight"
                 value={set.weight}
                 type="number"
                 onChange={(event) =>
