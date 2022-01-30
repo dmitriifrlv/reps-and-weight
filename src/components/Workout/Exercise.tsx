@@ -93,9 +93,14 @@ export const Exercise = ({
     }
   };
 
+  const deleteExerciseHandler = () => {
+    onDeleteExerciseHandler(data);
+    setExercise("");
+    setSets([]);
+  };
   return (
     <Layout
-      onDeleteExerciseHandler={() => onDeleteExerciseHandler(data)}
+      onDeleteExerciseHandler={deleteExerciseHandler}
       exercisePage={true}
       setExercisePage={setExercisePage}
       onAddExerciseHandler={() =>
