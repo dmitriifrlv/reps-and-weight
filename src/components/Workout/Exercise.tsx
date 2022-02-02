@@ -23,23 +23,13 @@ const SetsContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding-top: 4px;
+  padding-bottom: 32px;
 `;
 
 const ExerciseRow = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
-`;
-
-const CreatingNewSetContainer = styled.div`
-  label: CreatingNewSetContainer;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  p {
-    font-size: 1.125rem;
-    font-weight: 500;
-  }
 `;
 
 type ExerciseProps = {
@@ -159,37 +149,12 @@ export const Exercise = ({
                 />
               </ExerciseRow>
             ))}
-            <CreatingNewSetContainer>
-              <p>Creating new set:</p>
-              <ExerciseRow>
-                <NeoInput
-                  placeholder="Reps"
-                  value={set.reps}
-                  type="number"
-                  onChange={(event) =>
-                    setSet((prevValue) => ({
-                      ...prevValue,
-                      reps: parseInt(event.target.value, 10),
-                    }))
-                  }
-                />
-                <NeoInput
-                  placeholder="Weight"
-                  value={set.weight}
-                  type="number"
-                  onChange={(event) =>
-                    setSet((prevValue) => ({
-                      ...prevValue,
-                      weight: parseInt(event.target.value, 10),
-                    }))
-                  }
-                />
-                <IconButton
-                  icon={<AiOutlinePlus size="1.5rem" />}
-                  onClick={onAddSetHandler}
-                />
-              </ExerciseRow>
-            </CreatingNewSetContainer>
+
+            <IconButton
+              icon={<AiOutlinePlus size="1.5rem" />}
+              onClick={onAddSetHandler}
+              color="red"
+            />
           </SetsContainer>
         </WorkoutCard>
       </WorkoutContainer>
