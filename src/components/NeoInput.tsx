@@ -40,10 +40,8 @@ const StyledInput = styled.input`
   &:valid ~ label {
     top: 0px;
     font-size: 14px;
-    color: #4285f4;
-    color: #5186f8;
-    color: #5d8ef8;
-    color: #90b1f9;
+    /* color: #90b1f9; */
+    color: "#f0f0f0";
     font-weight: 500;
   }
 `;
