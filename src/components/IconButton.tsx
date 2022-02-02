@@ -14,10 +14,15 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
   justify-content: center;
   cursor: pointer;
   border: none;
+  min-height: 48px;
   color: ${({ darkMode, theme }) =>
     darkMode ? theme.colors.light : theme.colors.dark};
-  background: ${({ darkMode, theme }) =>
-    darkMode ? theme.colors.dark : theme.colors.light};
+  background: ${({ darkMode, theme, color }) => {
+    if (color === "red") {
+      return theme.colors.red;
+    }
+    return darkMode ? theme.colors.dark : theme.colors.light;
+  }};
   box-shadow: ${({ darkMode, theme }) =>
     darkMode ? theme.shadows.dark.bsDark : theme.shadows.light.bsLight};
   min-width: ${({ size }) =>
@@ -25,16 +30,25 @@ const StyledIconButton = styled.button<StyledIconButtonProps>`
   height: ${({ size }) =>
     size === "small" ? "2rem" : size === "big" ? "3.75rem" : "3rem"};
   &:hover {
-    box-shadow: ${({ darkMode, theme }) =>
-      darkMode
+    box-shadow: ${({ darkMode, theme, color }) => {
+      if (color === "red") {
+        return "none";
+      }
+      return darkMode
         ? theme.shadows.dark.bsDarkHover
-        : theme.shadows.light.bsLightHover};
+        : theme.shadows.light.bsLightHover;
+    }};
+    background: ${({ color, theme }) => (color === "red" ? "#e0451f" : "none")};
   }
   &:active {
-    box-shadow: ${({ darkMode, theme }) =>
-      darkMode
+    box-shadow: ${({ darkMode, theme, color }) => {
+      if (color === "red") {
+        return "none";
+      }
+      return darkMode
         ? theme.shadows.dark.bsDarkActive
-        : theme.shadows.light.bsLightActive};
+        : theme.shadows.light.bsLightActive;
+    }};
   }
 `;
 
@@ -42,13 +56,19 @@ type IconButtonProps = {
   size?: "regular" | "small" | "big";
   onClick?: () => void;
   icon: React.ReactNode;
+  color?: "red";
 };
 
-const IconButton = ({ size = "regular", icon, ...rest }: IconButtonProps) => {
+const IconButton = ({
+  size = "regular",
+  color,
+  icon,
+  ...rest
+}: IconButtonProps) => {
   const { darkMode } = useContext(ThemeContext);
 
   return (
-    <StyledIconButton size={size} darkMode={darkMode} {...rest}>
+    <StyledIconButton color={color} size={size} darkMode={darkMode} {...rest}>
       {icon}
     </StyledIconButton>
   );
