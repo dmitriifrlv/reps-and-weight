@@ -2,7 +2,7 @@
   --container: calc(100vw - 64px - 6px);
   /* - original: */
   /* --cell-height: calc(100vh - 10rem - 6px);  */
-  --cell-height: calc(100vh - 12rem - 6px);
+  --cell-height: calc(100vh - 14rem - 6px);
   --rdp-cell-size: calc(var(--container) / 7);
   --rdp-cell-height: calc(var(--cell-height) / 8);
   --rdp-accent-color: #f0f0f0;
