@@ -41,11 +41,6 @@ export const Profile = () => {
           <p>
             Total workouts: <ProfileInfo>{data.workouts.length}</ProfileInfo>
           </p>
-          <NeoButton
-            onClick={() => logout()}
-            icon={<MdExitToApp />}
-            text="Exit"
-          />
         </ProfileSection>
       ) : null}
     </Layout>

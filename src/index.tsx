@@ -9,18 +9,21 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { AuthProvider } from "./app/AuthContext";
 import { store } from "./app/store";
+import { MantineProvider } from "@mantine/core";
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <ColorModeProvider>
-        <AuthProvider>
-          <BrowserRouter>
-            <Provider store={store}>
-              <App />
-            </Provider>
-          </BrowserRouter>
-        </AuthProvider>
+        <MantineProvider theme={{ colorScheme: "dark" }}>
+          <AuthProvider>
+            <BrowserRouter>
+              <Provider store={store}>
+                <App />
+              </Provider>
+            </BrowserRouter>
+          </AuthProvider>
+        </MantineProvider>
       </ColorModeProvider>
     </ThemeProvider>
   </React.StrictMode>,
