@@ -28,7 +28,8 @@ const Footer = styled.footer`
   align-items: center;
   background: #b43919;
   border-radius: 16px 16px 0 0;
-  padding: 0 16px;
+  padding: 0;
+  /* padding: 0 16px; */
   > button {
     width: 100%;
   }
