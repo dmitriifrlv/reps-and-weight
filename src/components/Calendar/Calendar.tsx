@@ -18,7 +18,7 @@ const CalendarCard = styled.div<CardProps>`
     darkMode ? theme.shadows.dark.bsDark : theme.shadows.light.bsLight};
   transition: box-shadow 0.2s ease;
   border-radius: 1rem;
-  // height: 100%;
+  /* height: 100%; */
   @media (max-width: 768px) {
     border-radius: 0;
   }

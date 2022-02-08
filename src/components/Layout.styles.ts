@@ -17,7 +17,7 @@ const Navigation = styled.nav`
 `;
 const Main = styled.main`
   height: calc(100% - 48px - 92px);
-  padding: 0;
+  padding: 16px 0;
 `;
 
 const Footer = styled.footer`
