@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 const Container = styled.div<{ darkMode?: boolean }>`
   label: calendarContainer;
-  height: calc(100vh - 10rem - 6px);
+  height: calc(100vh - 16rem - 6px);
   width: 100%;
   padding: 2rem;
   & > svg {
