@@ -33,4 +33,10 @@ const Footer = styled.footer`
     width: 100%;
   }
 `;
-export { Layout, Header, Main, Footer, Navigation };
+
+const ButtonBlock = styled.div`
+  display: flex;
+  gap: 16px;
+`;
+
+export { Layout, Header, Main, Footer, Navigation, ButtonBlock };

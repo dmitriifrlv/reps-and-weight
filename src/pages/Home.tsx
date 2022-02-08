@@ -44,7 +44,7 @@ export const Home = () => {
       <Footer>
         <NeoButton
           onClick={() => navigate("/workout")}
-          text="Add exercise"
+          text="New Workout"
           color="red"
         />
       </Footer>

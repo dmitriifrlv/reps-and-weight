@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState, useReducer } from "react";
-import { Layout } from "../Layout";
 import MuscleGroupSelector, {
   SelectOptionType,
 } from "../../components/MuscleGroupSelector/MuscleGroupSelector";
@@ -22,6 +21,21 @@ import {
   WorkoutHeader,
   ExercisesContainer,
 } from "./Styles";
+import {
+  Layout,
+  Header,
+  Main,
+  Footer,
+  Navigation,
+  ButtonBlock,
+} from "../Layout.styles";
+import { NeoButton } from "..";
+import { ActionIcon } from "@mantine/core";
+import {
+  AiOutlineArrowLeft,
+  AiOutlineSave,
+  AiOutlineDelete,
+} from "react-icons/ai";
 
 const initialState: WorkoutDataType = {
   muscleGroups: [],
@@ -154,62 +168,78 @@ const Workout = ({ data }: WorkoutType) => {
   }
 
   return (
-    <Layout
-      exercisePage={exercisePage}
-      setExercisePage={setExercisePage}
-      goToExercisePage={() => setExercisePage(true)}
-      loading={
-        editMode
-          ? updateWorkoutResponse.isLoading
-          : addWorkoutResponse.isLoading
-      }
-      onSaveWorkoutHandler={
-        editMode ? onUpdateWorkoutHandler : onSaveWorkoutHandler
-      }
-      onDeleteWorkoutHandler={onDeleteWorkoutHandler}
-    >
-      <WorkoutContainer>
-        <WorkoutCard darkMode={darkMode}>
-          <WorkoutHeader>
-            <InputContainer>
-              <DateInput
-                value={
-                  typeof workout.date === "string"
-                    ? new Date(workout.date)
-                    : workout.date
-                }
-                onChange={(date: Date) =>
-                  dispatchWorkout({ type: "dateChange", payload: date })
-                }
-              />
-            </InputContainer>
-            <InputContainer>
-              <MuscleGroupSelector
-                showMuscleGroups={workout.muscleGroups}
-                onChange={(values) => {
-                  const muscleGroups = values.map(
-                    (muscleGroup: SelectOptionType) => muscleGroup.value
-                  );
-                  dispatchWorkout({
-                    type: "muscleGroupsChange",
-                    payload: muscleGroups,
-                  });
-                }}
-              />
-            </InputContainer>
-          </WorkoutHeader>
-          <ExercisesContainer>
-            {workout.exercises.map((exercise, index) => (
-              <ExerciseCard
-                setEditExercise={setEditExercise}
-                setExercisePage={setExercisePage}
-                key={index}
-                data={exercise}
-              />
-            ))}
-          </ExercisesContainer>
-        </WorkoutCard>
-      </WorkoutContainer>
+    <Layout>
+      <Header>
+        <Navigation>
+          <ActionIcon onClick={() => navigate(-1)} size="lg">
+            <AiOutlineArrowLeft size="24px" />
+          </ActionIcon>
+          <ButtonBlock>
+            {editMode && (
+              <ActionIcon onClick={onDeleteWorkoutHandler} size="lg">
+                <AiOutlineDelete size="24px" />
+              </ActionIcon>
+            )}
+            <ActionIcon
+              onClick={editMode ? onUpdateWorkoutHandler : onSaveWorkoutHandler}
+              size="lg"
+            >
+              <AiOutlineSave size="24px" />
+            </ActionIcon>
+          </ButtonBlock>
+        </Navigation>
+      </Header>
+      <Main>
+        <WorkoutContainer>
+          <WorkoutCard darkMode={darkMode}>
+            <WorkoutHeader>
+              <InputContainer>
+                <DateInput
+                  value={
+                    typeof workout.date === "string"
+                      ? new Date(workout.date)
+                      : workout.date
+                  }
+                  onChange={(date: Date) =>
+                    dispatchWorkout({ type: "dateChange", payload: date })
+                  }
+                />
+              </InputContainer>
+              <InputContainer>
+                <MuscleGroupSelector
+                  showMuscleGroups={workout.muscleGroups}
+                  onChange={(values) => {
+                    const muscleGroups = values.map(
+                      (muscleGroup: SelectOptionType) => muscleGroup.value
+                    );
+                    dispatchWorkout({
+                      type: "muscleGroupsChange",
+                      payload: muscleGroups,
+                    });
+                  }}
+                />
+              </InputContainer>
+            </WorkoutHeader>
+            <ExercisesContainer>
+              {workout.exercises.map((exercise, index) => (
+                <ExerciseCard
+                  setEditExercise={setEditExercise}
+                  setExercisePage={setExercisePage}
+                  key={index}
+                  data={exercise}
+                />
+              ))}
+            </ExercisesContainer>
+          </WorkoutCard>
+        </WorkoutContainer>
+      </Main>
+      <Footer>
+        <NeoButton
+          onClick={() => setExercisePage(true)}
+          text="Add exercise"
+          color="red"
+        />
+      </Footer>
     </Layout>
   );
 };
