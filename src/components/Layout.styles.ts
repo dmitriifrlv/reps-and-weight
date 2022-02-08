@@ -17,7 +17,7 @@ const Navigation = styled.nav`
 `;
 const Main = styled.main`
   height: calc(100% - 48px - 92px);
-  padding: 16px 0;
+  padding: 0;
 `;
 
 const Footer = styled.footer`
@@ -28,8 +28,7 @@ const Footer = styled.footer`
   align-items: center;
   background: #b43919;
   border-radius: 16px 16px 0 0;
-  padding: 0;
-  /* padding: 0 16px; */
+  padding: 0 16px;
   > button {
     width: 100%;
   }
