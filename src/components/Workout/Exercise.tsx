@@ -118,6 +118,7 @@ export const Exercise = ({
     setExercise("");
     setSets([]);
   };
+
   return (
     <Layout>
       <Header>
@@ -172,11 +173,11 @@ export const Exercise = ({
               /> */}
             </ExerciseHeader>
             <SetsContainer>
-              {sets.map((set) => (
+              {sets.map((set, index) => (
                 <ExerciseRow key={set.id}>
                   <NumberInput
                     placeholder="Reps"
-                    label="Reps"
+                    label={index === 0 ? "Reps:" : null}
                     onChange={(value) => updateSet(set, "reps", value)}
                     classNames={{
                       label: "textLabel",
@@ -187,7 +188,8 @@ export const Exercise = ({
                   />
                   <NumberInput
                     placeholder="Weight"
-                    label="Weight"
+                    // label="Weight"
+                    label={index === 0 ? "Weight:" : null}
                     onChange={(value) => updateSet(set, "weight", value)}
                     classNames={{
                       label: "textLabel",
