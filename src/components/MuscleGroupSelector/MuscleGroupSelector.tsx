@@ -8,7 +8,7 @@ export type SelectOptionType = { value: string; label: string };
 
 const animatedComponents = makeAnimated();
 
-const options: SelectOptionType[] = [
+export const options: SelectOptionType[] = [
   { value: "Chest", label: "Chest" },
   { value: "Back", label: "Back" },
   { value: "Triceps", label: "Triceps" },

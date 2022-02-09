@@ -40,6 +40,7 @@ const WorkoutHeader = styled.div`
   padding: 2rem 2rem 0 2rem;
   @media (max-width: 768px) {
     flex-direction: column;
+    padding: 0 32px;
   }
 `;
 

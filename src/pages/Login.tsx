@@ -9,6 +9,8 @@ import { ThemeContext } from "../Styles/ThemeContext";
 import { useLoginMutation, useSignupMutation } from "../app/service";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../app/AuthContext";
+import { TextInput } from "@mantine/core";
+import { PasswordInput } from "@mantine/core";
 
 type CardProps = {
   darkMode: boolean;
@@ -111,7 +113,7 @@ const Login = () => {
       navigate(from, { replace: true });
     }
   }, [authContext, from, loginResponse, navigate, signupResponse.isSuccess]);
-  console.log(process.env);
+
   return (
     <>
       <FormContainer onSubmit={onSubmitHandler} darkMode={darkMode}>
@@ -120,17 +122,35 @@ const Login = () => {
           <LogoText>Reps & Weight</LogoText>
         </LogoContainer>
         <InputsContainer>
-          <NeoInput
+          <TextInput
+            placeholder="jonhdoe@gmail.com"
+            label="Email"
+            onChange={(event) => setEmail(event.currentTarget.value)}
+            classNames={{
+              label: "textLabel",
+            }}
+            size="md"
+          />
+          <PasswordInput
+            placeholder="Password"
+            label="Password"
+            onChange={(event) => setPassword(event.currentTarget.value)}
+            classNames={{
+              label: "textLabel",
+            }}
+            size="md"
+          />
+          {/* <NeoInput
             placeholder="Email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-          />
-          <NeoInput
+          /> */}
+          {/* <NeoInput
             type="password"
             placeholder="Password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-          />
+          /> */}
           <NeoButton
             type="submit"
             fullWidth

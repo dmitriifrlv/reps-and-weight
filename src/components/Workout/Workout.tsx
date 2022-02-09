@@ -36,6 +36,9 @@ import {
   AiOutlineSave,
   AiOutlineDelete,
 } from "react-icons/ai";
+import { DatePicker } from "@mantine/dates";
+import { MultiSelect } from "@mantine/core";
+import { options } from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 
 const initialState: WorkoutDataType = {
   muscleGroups: [],
@@ -166,7 +169,7 @@ const Workout = ({ data }: WorkoutType) => {
       />
     );
   }
-
+  console.log(workout);
   return (
     <Layout>
       <Header>
@@ -194,7 +197,9 @@ const Workout = ({ data }: WorkoutType) => {
           <WorkoutCard darkMode={darkMode}>
             <WorkoutHeader>
               <InputContainer>
-                <DateInput
+                <DatePicker
+                  placeholder="Pick date"
+                  label="Workout Date"
                   value={
                     typeof workout.date === "string"
                       ? new Date(workout.date)
@@ -203,10 +208,41 @@ const Workout = ({ data }: WorkoutType) => {
                   onChange={(date: Date) =>
                     dispatchWorkout({ type: "dateChange", payload: date })
                   }
+                  dropdownType="modal"
+                  classNames={{
+                    label: "myLabel",
+                  }}
+                  required
                 />
+                {/* <DateInput
+                  value={
+                    typeof workout.date === "string"
+                      ? new Date(workout.date)
+                      : workout.date
+                  }
+                  onChange={(date: Date) =>
+                    dispatchWorkout({ type: "dateChange", payload: date })
+                  }
+                /> */}
               </InputContainer>
               <InputContainer>
-                <MuscleGroupSelector
+                <MultiSelect
+                  required
+                  label="Muscle Groups"
+                  placeholder="What do you train today?"
+                  data={options}
+                  classNames={{
+                    label: "myLabel",
+                  }}
+                  value={workout.muscleGroups}
+                  onChange={(value) =>
+                    dispatchWorkout({
+                      type: "muscleGroupsChange",
+                      payload: value,
+                    })
+                  }
+                />
+                {/* <MuscleGroupSelector
                   showMuscleGroups={workout.muscleGroups}
                   onChange={(values) => {
                     const muscleGroups = values.map(
@@ -217,7 +253,7 @@ const Workout = ({ data }: WorkoutType) => {
                       payload: muscleGroups,
                     });
                   }}
-                />
+                /> */}
               </InputContainer>
             </WorkoutHeader>
             <ExercisesContainer>

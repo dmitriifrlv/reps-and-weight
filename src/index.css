@@ -80,3 +80,13 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+.myLabel {
+  font-size: 14px;
+  color: #f0f0f0;
+}
+.textLabel {
+  font-family: "Baloo Thambi 2", cursive;
+  font-size: 14px;
+  color: #f0f0f0;
+}

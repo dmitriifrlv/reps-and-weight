@@ -22,10 +22,15 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { NeoButton } from "..";
+import { TextInput } from "@mantine/core";
+import { NumberInput } from "@mantine/core";
 
 const ExerciseHeader = styled.div`
   width: 100%;
-  padding: 0 2rem;
+  padding: 16px 32px;
+  @media (max-width: 768px) {
+    padding: 0 32px;
+  }
 `;
 const SetsContainer = styled.div`
   width: 100%;
@@ -149,36 +154,67 @@ export const Exercise = ({
         <WorkoutContainer>
           <WorkoutCard darkMode={darkMode}>
             <ExerciseHeader>
-              <NeoInput
+              <TextInput
+                value={exercise}
+                onChange={(event) => setExercise(event.target.value)}
+                placeholder="Bench Press"
+                label="Exercise Name"
+                classNames={{
+                  label: "myLabel",
+                }}
+                required
+              />
+              {/* <NeoInput
                 value={exercise}
                 onChange={(event) => setExercise(event.target.value)}
                 placeholder="Exercise name"
-              />
+              /> */}
             </ExerciseHeader>
             <SetsContainer>
               {sets.map((set) => (
                 <ExerciseRow key={set.id}>
-                  <NeoInput
+                  <NumberInput
+                    defaultValue={18}
+                    placeholder="Reps"
+                    label="Reps"
+                    onChange={(value) => updateSet(set, "reps", value)}
+                    // required
+                  />
+                  <NumberInput
+                    defaultValue={18}
+                    placeholder="Weight"
+                    label="Weight"
+                    onChange={(value) => updateSet(set, "weight", value)}
+                    // required
+                  />
+                  {/* <NeoInput
                     placeholder="Reps"
                     value={set.reps}
                     type="number"
                     onChange={(event) =>
                       updateSet(set, "reps", event.target.value)
                     }
-                  />
-                  <NeoInput
+                  /> */}
+                  {/* <NeoInput
                     placeholder="Weight"
                     value={set.weight}
                     type="number"
                     onChange={(event) =>
                       updateSet(set, "weight", event.target.value)
                     }
-                  />
-
-                  <IconButton
+                  /> */}
+                  <ActionIcon
+                    variant="light"
+                    onClick={() => onDeleteSetHandler(set)}
+                    size="lg"
+                    sx={{ alignSelf: "flex-end" }}
+                  >
+                    <AiOutlineDelete size="24px" />
+                  </ActionIcon>
+                  {/* <IconButton
                     icon={<AiOutlineDelete size="1.5rem" />}
                     onClick={() => onDeleteSetHandler(set)}
-                  />
+                  /> */}
                 </ExerciseRow>
               ))}
             </SetsContainer>
