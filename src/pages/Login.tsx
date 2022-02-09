@@ -141,6 +141,9 @@ const Login = () => {
               input: "inputText",
             }}
             size="md"
+            sx={{
+              "&::placeholder": { fontFamily: "Baloo Thambi 2", color: "red" },
+            }}
           />
           {/* <NeoInput
             placeholder="Email"

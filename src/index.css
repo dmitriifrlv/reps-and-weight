@@ -97,4 +97,10 @@ h6 {
 }
 .inputText::placeholder {
   font-size: 1.125rem;
+  font-family: "Baloo Thambi 2", cursive;
+}
+
+.dropdownCalendar {
+  font-family: "Baloo Thambi 2", cursive;
+  font-size: 1.125rem;
 }

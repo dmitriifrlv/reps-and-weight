@@ -48,7 +48,7 @@ const SetsContainer = styled.div`
 const ExerciseRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 24px;
 `;
 
 type ExerciseProps = {
@@ -175,7 +175,6 @@ export const Exercise = ({
               {sets.map((set) => (
                 <ExerciseRow key={set.id}>
                   <NumberInput
-                    defaultValue={18}
                     placeholder="Reps"
                     label="Reps"
                     onChange={(value) => updateSet(set, "reps", value)}
@@ -216,7 +215,7 @@ export const Exercise = ({
                   <ActionIcon
                     variant="light"
                     onClick={() => onDeleteSetHandler(set)}
-                    size="lg"
+                    size="xl"
                     sx={{ alignSelf: "flex-end" }}
                   >
                     <AiOutlineDelete size="24px" />

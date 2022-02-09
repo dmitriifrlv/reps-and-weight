@@ -212,6 +212,9 @@ const Workout = ({ data }: WorkoutType) => {
                   classNames={{
                     label: "textLabel",
                     input: "inputText",
+                    day: "dropdownCalendar",
+                    weekday: "dropdownCalendar",
+                    month: "dropdownCalendar",
                   }}
                 />
                 {/* <DateInput
@@ -234,6 +237,7 @@ const Workout = ({ data }: WorkoutType) => {
                   classNames={{
                     label: "textLabel",
                     input: "inputText",
+                    dropdown: "inputText",
                   }}
                   value={workout.muscleGroups}
                   onChange={(value) =>
