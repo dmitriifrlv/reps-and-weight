@@ -195,6 +195,8 @@ export const Exercise = ({
                     }}
                     sx={{ width: "100%" }}
                     size="md"
+                    step={0.25}
+                    precision={2}
                   />
                   {/* <NeoInput
                     placeholder="Reps"
