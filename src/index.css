@@ -86,7 +86,15 @@ h6 {
   color: #f0f0f0;
 }
 .textLabel {
-  font-family: "Baloo Thambi 2", cursive;
-  font-size: 14px;
   color: #f0f0f0;
+  font-family: "Baloo Thambi 2", cursive;
+  font-size: 1rem;
+}
+
+.inputText {
+  font-size: 1.125rem;
+  font-family: "Baloo Thambi 2", cursive;
+}
+.inputText::placeholder {
+  font-size: 1.125rem;
 }

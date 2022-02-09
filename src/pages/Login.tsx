@@ -128,6 +128,7 @@ const Login = () => {
             onChange={(event) => setEmail(event.currentTarget.value)}
             classNames={{
               label: "textLabel",
+              input: "inputText",
             }}
             size="md"
           />
@@ -137,6 +138,7 @@ const Login = () => {
             onChange={(event) => setPassword(event.currentTarget.value)}
             classNames={{
               label: "textLabel",
+              input: "inputText",
             }}
             size="md"
           />

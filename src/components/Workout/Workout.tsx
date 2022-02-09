@@ -169,7 +169,7 @@ const Workout = ({ data }: WorkoutType) => {
       />
     );
   }
-  console.log(workout);
+
   return (
     <Layout>
       <Header>
@@ -210,9 +210,9 @@ const Workout = ({ data }: WorkoutType) => {
                   }
                   dropdownType="modal"
                   classNames={{
-                    label: "myLabel",
+                    label: "textLabel",
+                    input: "inputText",
                   }}
-                  required
                 />
                 {/* <DateInput
                   value={
@@ -232,7 +232,8 @@ const Workout = ({ data }: WorkoutType) => {
                   placeholder="What do you train today?"
                   data={options}
                   classNames={{
-                    label: "myLabel",
+                    label: "textLabel",
+                    input: "inputText",
                   }}
                   value={workout.muscleGroups}
                   onChange={(value) =>

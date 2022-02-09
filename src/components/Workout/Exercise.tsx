@@ -160,9 +160,9 @@ export const Exercise = ({
                 placeholder="Bench Press"
                 label="Exercise Name"
                 classNames={{
-                  label: "myLabel",
+                  label: "textLabel",
+                  input: "inputText",
                 }}
-                required
               />
               {/* <NeoInput
                 value={exercise}
@@ -178,14 +178,21 @@ export const Exercise = ({
                     placeholder="Reps"
                     label="Reps"
                     onChange={(value) => updateSet(set, "reps", value)}
-                    // required
+                    classNames={{
+                      label: "textLabel",
+                      input: "inputText",
+                    }}
+                    sx={{ width: "100%" }}
                   />
                   <NumberInput
-                    defaultValue={18}
                     placeholder="Weight"
                     label="Weight"
                     onChange={(value) => updateSet(set, "weight", value)}
-                    // required
+                    classNames={{
+                      label: "textLabel",
+                      input: "inputText",
+                    }}
+                    sx={{ width: "100%" }}
                   />
                   {/* <NeoInput
                     placeholder="Reps"
