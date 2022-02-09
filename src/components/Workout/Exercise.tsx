@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
 import { nanoid } from "nanoid";
 import { ExerciseType, SetType } from "../../Types/WorkoutTypes";
-import { NeoInput } from "../NeoInput";
-import { IconButton } from "../IconButton";
+// import { NeoInput } from "../NeoInput";
+// import { IconButton } from "../IconButton";
 import { WorkoutContainer, WorkoutCard } from "./Styles";
 import { ThemeContext } from "../../Styles/ThemeContext";
 import {

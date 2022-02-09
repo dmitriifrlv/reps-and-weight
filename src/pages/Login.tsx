@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 // import { StyledInput, StyledButton } from "../components/";
-import { NeoInput, NeoButton } from "../components";
+import { NeoButton } from "../components";
 import { theme } from "../Styles/Theme";
 import styled from "@emotion/styled";
 import { CgGym } from "react-icons/cg";

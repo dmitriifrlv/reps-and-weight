@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState, useReducer } from "react";
-import MuscleGroupSelector, {
-  SelectOptionType,
-} from "../../components/MuscleGroupSelector/MuscleGroupSelector";
+// import MuscleGroupSelector, {
+//   SelectOptionType,
+// } from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 import { WorkoutDataType, ExerciseType } from "../../Types/WorkoutTypes";
 import { WorkoutType, WorkoutActionType } from "./Workout.types";
 import { Exercise } from "./Exercise";
@@ -12,7 +12,7 @@ import {
   useUpdateWorkoutMutation,
 } from "../../app/service";
 import { useNavigate, useParams } from "react-router-dom";
-import { DateInput } from "../DatePicker/DatePicker";
+// import { DateInput } from "../DatePicker/DatePicker";
 import { ThemeContext } from "../../Styles/ThemeContext";
 import {
   InputContainer,
