@@ -208,7 +208,7 @@ const Workout = ({ data }: WorkoutType) => {
                   onChange={(date: Date) =>
                     dispatchWorkout({ type: "dateChange", payload: date })
                   }
-                  dropdownType="modal"
+                  size="md"
                   classNames={{
                     label: "textLabel",
                     input: "inputText",
@@ -242,6 +242,7 @@ const Workout = ({ data }: WorkoutType) => {
                       payload: value,
                     })
                   }
+                  size="md"
                 />
                 {/* <MuscleGroupSelector
                   showMuscleGroups={workout.muscleGroups}

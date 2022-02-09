@@ -163,6 +163,7 @@ export const Exercise = ({
                   label: "textLabel",
                   input: "inputText",
                 }}
+                size="md"
               />
               {/* <NeoInput
                 value={exercise}
@@ -183,6 +184,7 @@ export const Exercise = ({
                       input: "inputText",
                     }}
                     sx={{ width: "100%" }}
+                    size="md"
                   />
                   <NumberInput
                     placeholder="Weight"
@@ -193,6 +195,7 @@ export const Exercise = ({
                       input: "inputText",
                     }}
                     sx={{ width: "100%" }}
+                    size="md"
                   />
                   {/* <NeoInput
                     placeholder="Reps"
