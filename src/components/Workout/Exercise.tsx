@@ -2,8 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
 import { nanoid } from "nanoid";
 import { ExerciseType, SetType } from "../../Types/WorkoutTypes";
-// import { NeoInput } from "../NeoInput";
-// import { IconButton } from "../IconButton";
 import { WorkoutContainer, WorkoutCard } from "./Styles";
 import { ThemeContext } from "../../Styles/ThemeContext";
 import {
@@ -14,7 +12,7 @@ import {
   Navigation,
   ButtonBlock,
 } from "../Layout.styles";
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, TextInput, NumberInput } from "@mantine/core";
 import {
   AiOutlineArrowLeft,
   AiOutlineSave,
@@ -22,9 +20,6 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { NeoButton } from "..";
-import { TextInput } from "@mantine/core";
-import { NumberInput } from "@mantine/core";
-
 const ExerciseHeader = styled.div`
   width: 100%;
   padding: 16px 32px;
@@ -161,8 +156,8 @@ export const Exercise = ({
                 placeholder="Bench Press"
                 label="Exercise Name"
                 classNames={{
-                  label: "textLabel",
-                  input: "inputText",
+                  label: "text",
+                  input: "text-l",
                 }}
                 size="md"
               />
@@ -180,11 +175,12 @@ export const Exercise = ({
                     label={index === 0 ? "Reps:" : null}
                     onChange={(value) => updateSet(set, "reps", value)}
                     classNames={{
-                      label: "textLabel",
-                      input: "inputText",
+                      label: "text",
+                      input: "text-l",
                     }}
                     sx={{ width: "100%" }}
                     size="md"
+                    value={set.reps}
                   />
                   <NumberInput
                     placeholder="Weight"
@@ -192,30 +188,15 @@ export const Exercise = ({
                     label={index === 0 ? "Weight:" : null}
                     onChange={(value) => updateSet(set, "weight", value)}
                     classNames={{
-                      label: "textLabel",
-                      input: "inputText",
+                      label: "text",
+                      input: "text-l",
                     }}
                     sx={{ width: "100%" }}
                     size="md"
                     step={0.25}
                     precision={2}
-                  />
-                  {/* <NeoInput
-                    placeholder="Reps"
-                    value={set.reps}
-                    type="number"
-                    onChange={(event) =>
-                      updateSet(set, "reps", event.target.value)
-                    }
-                  /> */}
-                  {/* <NeoInput
-                    placeholder="Weight"
                     value={set.weight}
-                    type="number"
-                    onChange={(event) =>
-                      updateSet(set, "weight", event.target.value)
-                    }
-                  /> */}
+                  />
                   <ActionIcon
                     variant="light"
                     onClick={() => onDeleteSetHandler(set)}
@@ -224,10 +205,6 @@ export const Exercise = ({
                   >
                     <AiOutlineDelete size="24px" />
                   </ActionIcon>
-                  {/* <IconButton
-                    icon={<AiOutlineDelete size="1.5rem" />}
-                    onClick={() => onDeleteSetHandler(set)}
-                  /> */}
                 </ExerciseRow>
               ))}
             </SetsContainer>
@@ -235,11 +212,6 @@ export const Exercise = ({
         </WorkoutContainer>
       </Main>
       <Footer>
-        {/* <IconButton
-          icon={<AiOutlinePlus size="1.5rem" />}
-          onClick={onAddSetHandler}
-          color="red"
-        /> */}
         <NeoButton
           icon={<AiOutlinePlus size="1.5rem" />}
           onClick={onAddSetHandler}
