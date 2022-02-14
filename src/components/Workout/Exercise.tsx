@@ -2,8 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import styled from "@emotion/styled";
 import { nanoid } from "nanoid";
 import { ExerciseType, SetType } from "../../Types/WorkoutTypes";
-import { NeoInput } from "../NeoInput";
-import { IconButton } from "../IconButton";
 import { WorkoutContainer, WorkoutCard } from "./Styles";
 import { ThemeContext } from "../../Styles/ThemeContext";
 import {
@@ -14,7 +12,7 @@ import {
   Navigation,
   ButtonBlock,
 } from "../Layout.styles";
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, TextInput, NumberInput } from "@mantine/core";
 import {
   AiOutlineArrowLeft,
   AiOutlineSave,
@@ -22,10 +20,14 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { NeoButton } from "..";
+import { ButtonContainer } from "../../pages/Home";
 
 const ExerciseHeader = styled.div`
   width: 100%;
-  padding: 0 2rem;
+  padding: 16px 32px;
+  @media (max-width: 768px) {
+    padding: 0 32px;
+  }
 `;
 const SetsContainer = styled.div`
   width: 100%;
@@ -43,7 +45,7 @@ const SetsContainer = styled.div`
 const ExerciseRow = styled.div`
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 24px;
 `;
 
 type ExerciseProps = {
@@ -113,6 +115,7 @@ export const Exercise = ({
     setExercise("");
     setSets([]);
   };
+
   return (
     <Layout>
       <Header>
@@ -149,36 +152,55 @@ export const Exercise = ({
         <WorkoutContainer>
           <WorkoutCard darkMode={darkMode}>
             <ExerciseHeader>
-              <NeoInput
+              <TextInput
                 value={exercise}
                 onChange={(event) => setExercise(event.target.value)}
-                placeholder="Exercise name"
+                placeholder="Bench Press"
+                label="Exercise Name"
+                classNames={{
+                  label: "text",
+                  input: "text-l",
+                }}
+                size="md"
               />
             </ExerciseHeader>
             <SetsContainer>
-              {sets.map((set) => (
+              {sets.map((set, index) => (
                 <ExerciseRow key={set.id}>
-                  <NeoInput
+                  <NumberInput
                     placeholder="Reps"
+                    label={index === 0 ? "Reps:" : null}
+                    onChange={(value) => updateSet(set, "reps", value)}
+                    classNames={{
+                      label: "text",
+                      input: "text-l",
+                    }}
+                    sx={{ width: "100%" }}
+                    size="md"
                     value={set.reps}
-                    type="number"
-                    onChange={(event) =>
-                      updateSet(set, "reps", event.target.value)
-                    }
                   />
-                  <NeoInput
+                  <NumberInput
                     placeholder="Weight"
+                    label={index === 0 ? "Weight:" : null}
+                    onChange={(value) => updateSet(set, "weight", value)}
+                    classNames={{
+                      label: "text",
+                      input: "text-l",
+                    }}
+                    sx={{ width: "100%" }}
+                    size="md"
+                    step={0.25}
+                    precision={2}
                     value={set.weight}
-                    type="number"
-                    onChange={(event) =>
-                      updateSet(set, "weight", event.target.value)
-                    }
                   />
-
-                  <IconButton
-                    icon={<AiOutlineDelete size="1.5rem" />}
+                  <ActionIcon
+                    variant="light"
                     onClick={() => onDeleteSetHandler(set)}
-                  />
+                    size="xl"
+                    sx={{ alignSelf: "flex-end" }}
+                  >
+                    <AiOutlineDelete size="24px" />
+                  </ActionIcon>
                 </ExerciseRow>
               ))}
             </SetsContainer>
@@ -186,17 +208,14 @@ export const Exercise = ({
         </WorkoutContainer>
       </Main>
       <Footer>
-        {/* <IconButton
-          icon={<AiOutlinePlus size="1.5rem" />}
-          onClick={onAddSetHandler}
-          color="red"
-        /> */}
-        <NeoButton
-          icon={<AiOutlinePlus size="1.5rem" />}
-          onClick={onAddSetHandler}
-          color="red"
-          text="Add New Set"
-        />
+        <ButtonContainer>
+          <NeoButton
+            icon={<AiOutlinePlus size="1.5rem" />}
+            onClick={onAddSetHandler}
+            color="red"
+            text="Add New Set"
+          />
+        </ButtonContainer>
       </Footer>
     </Layout>
   );

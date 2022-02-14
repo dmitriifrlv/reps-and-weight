@@ -281,10 +281,13 @@ tr:last-child .cell {
   max-width: var(--rdp-cell-size);
   height: var(--rdp-cell-height);
   margin: 0;
-  border: 2px solid transparent;
-  border-radius: 100%;
+  border: 0px solid transparent;
 }
-
+.day span {
+  width: var(--rdp-cell-size);
+  max-width: var(--rdp-cell-size);
+  height: var(--rdp-cell-height);
+}
 .day_today:not(.rdp-day_outside) {
   font-weight: bold;
 }

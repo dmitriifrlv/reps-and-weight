@@ -1,7 +1,4 @@
 import { useContext, useEffect, useState, useReducer } from "react";
-import MuscleGroupSelector, {
-  SelectOptionType,
-} from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 import { WorkoutDataType, ExerciseType } from "../../Types/WorkoutTypes";
 import { WorkoutType, WorkoutActionType } from "./Workout.types";
 import { Exercise } from "./Exercise";
@@ -12,7 +9,6 @@ import {
   useUpdateWorkoutMutation,
 } from "../../app/service";
 import { useNavigate, useParams } from "react-router-dom";
-import { DateInput } from "../DatePicker/DatePicker";
 import { ThemeContext } from "../../Styles/ThemeContext";
 import {
   InputContainer,
@@ -30,12 +26,28 @@ import {
   ButtonBlock,
 } from "../Layout.styles";
 import { NeoButton } from "..";
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, MultiSelect } from "@mantine/core";
 import {
   AiOutlineArrowLeft,
   AiOutlineSave,
   AiOutlineDelete,
 } from "react-icons/ai";
+import { DatePicker } from "@mantine/dates";
+import { ButtonContainer } from "../../pages/Home";
+
+type SelectOptionType = { value: string; label: string };
+
+const options: SelectOptionType[] = [
+  { value: "Chest", label: "Chest" },
+  { value: "Back", label: "Back" },
+  { value: "Triceps", label: "Triceps" },
+  { value: "Biceps", label: "Biceps" },
+  { value: "Shoulders", label: "Shoulders" },
+  { value: "ABS", label: "ABS" },
+  { value: "Legs", label: "Legs" },
+  { value: "Glutes", label: "Glutes" },
+  { value: "Calves", label: "Calves" },
+];
 
 const initialState: WorkoutDataType = {
   muscleGroups: [],
@@ -194,7 +206,9 @@ const Workout = ({ data }: WorkoutType) => {
           <WorkoutCard darkMode={darkMode}>
             <WorkoutHeader>
               <InputContainer>
-                <DateInput
+                <DatePicker
+                  placeholder="Pick date"
+                  label="Workout Date"
                   value={
                     typeof workout.date === "string"
                       ? new Date(workout.date)
@@ -203,20 +217,35 @@ const Workout = ({ data }: WorkoutType) => {
                   onChange={(date: Date) =>
                     dispatchWorkout({ type: "dateChange", payload: date })
                   }
+                  size="md"
+                  classNames={{
+                    label: "text",
+                    input: "text-l",
+                    day: "text-l",
+                    weekday: "text-l",
+                    month: "text-l",
+                  }}
                 />
               </InputContainer>
               <InputContainer>
-                <MuscleGroupSelector
-                  showMuscleGroups={workout.muscleGroups}
-                  onChange={(values) => {
-                    const muscleGroups = values.map(
-                      (muscleGroup: SelectOptionType) => muscleGroup.value
-                    );
+                <MultiSelect
+                  required
+                  label="Muscle Groups"
+                  placeholder="What do you train today?"
+                  data={options}
+                  classNames={{
+                    label: "text",
+                    input: "text-l",
+                    dropdown: "text-l",
+                  }}
+                  value={workout.muscleGroups}
+                  onChange={(value) =>
                     dispatchWorkout({
                       type: "muscleGroupsChange",
-                      payload: muscleGroups,
-                    });
-                  }}
+                      payload: value,
+                    })
+                  }
+                  size="md"
                 />
               </InputContainer>
             </WorkoutHeader>
@@ -234,11 +263,13 @@ const Workout = ({ data }: WorkoutType) => {
         </WorkoutContainer>
       </Main>
       <Footer>
-        <NeoButton
-          onClick={() => setExercisePage(true)}
-          text="Add exercise"
-          color="red"
-        />
+        <ButtonContainer>
+          <NeoButton
+            onClick={() => setExercisePage(true)}
+            text="Add exercise"
+            color="red"
+          />
+        </ButtonContainer>
       </Footer>
     </Layout>
   );

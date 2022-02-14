@@ -15,6 +15,17 @@ import { AiOutlineUser } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../app/AuthContext";
+import styled from "@emotion/styled";
+
+export const ButtonContainer = styled.div`
+  width: 100%;
+  button {
+    width: 100%;
+  }
+  @media (min-width: 769px) {
+    width: 200px;
+  }
+`;
 
 export const Home = () => {
   const { isSuccess, data, error, isLoading } = useGetUserInfoQuery();
@@ -42,11 +53,13 @@ export const Home = () => {
         ) : null}
       </Main>
       <Footer>
-        <NeoButton
-          onClick={() => navigate("/workout")}
-          text="New Workout"
-          color="red"
-        />
+        <ButtonContainer>
+          <NeoButton
+            onClick={() => navigate("/workout")}
+            text="New Workout"
+            color="red"
+          />
+        </ButtonContainer>
       </Footer>
     </Layout>
   );
