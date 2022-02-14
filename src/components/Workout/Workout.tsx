@@ -33,8 +33,21 @@ import {
   AiOutlineDelete,
 } from "react-icons/ai";
 import { DatePicker } from "@mantine/dates";
-import { options } from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 import { ButtonContainer } from "../../pages/Home";
+
+type SelectOptionType = { value: string; label: string };
+
+const options: SelectOptionType[] = [
+  { value: "Chest", label: "Chest" },
+  { value: "Back", label: "Back" },
+  { value: "Triceps", label: "Triceps" },
+  { value: "Biceps", label: "Biceps" },
+  { value: "Shoulders", label: "Shoulders" },
+  { value: "ABS", label: "ABS" },
+  { value: "Legs", label: "Legs" },
+  { value: "Glutes", label: "Glutes" },
+  { value: "Calves", label: "Calves" },
+];
 
 const initialState: WorkoutDataType = {
   muscleGroups: [],
