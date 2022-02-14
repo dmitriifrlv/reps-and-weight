@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-// import { StyledInput, StyledButton } from "../components/";
 import { NeoButton } from "../components";
 import { theme } from "../Styles/Theme";
 import styled from "@emotion/styled";
 import { CgGym } from "react-icons/cg";
 import { ThemeContext } from "../Styles/ThemeContext";
-// import { CardProps } from "../Types/StyledElementsTypes";
 import { useLoginMutation, useSignupMutation } from "../app/service";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../app/AuthContext";
-import { TextInput } from "@mantine/core";
-import { PasswordInput } from "@mantine/core";
+import { TextInput, PasswordInput } from "@mantine/core";
 
 type CardProps = {
   darkMode: boolean;
@@ -127,8 +124,8 @@ const Login = () => {
             label="Email"
             onChange={(event) => setEmail(event.currentTarget.value)}
             classNames={{
-              label: "textLabel",
-              input: "inputText",
+              label: "text",
+              input: "text-l",
             }}
             size="md"
           />
@@ -137,25 +134,14 @@ const Login = () => {
             label="Password"
             onChange={(event) => setPassword(event.currentTarget.value)}
             classNames={{
-              label: "textLabel",
-              input: "inputText",
+              label: "text",
+              input: "text-l",
             }}
             size="md"
             sx={{
               "&::placeholder": { fontFamily: "Baloo Thambi 2", color: "red" },
             }}
           />
-          {/* <NeoInput
-            placeholder="Email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          /> */}
-          {/* <NeoInput
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          /> */}
           <NeoButton
             type="submit"
             fullWidth
@@ -164,7 +150,6 @@ const Login = () => {
             size="large"
             isLoading={loginResponse.isLoading}
           />
-          {/* {loginResponse.isError && "wrong login or pasword"}  */}
         </InputsContainer>
 
         <AuthFooter>
