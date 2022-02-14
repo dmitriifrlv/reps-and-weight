@@ -40,6 +40,9 @@
   padding: 0;
 }
 
+:root {
+  --white: #f0f0f0;
+}
 html,
 body,
 #root {
@@ -81,26 +84,33 @@ h6 {
   isolation: isolate;
 }
 
-.myLabel {
-  font-size: 14px;
-  color: #f0f0f0;
-}
-.textLabel {
-  color: #f0f0f0;
+.text {
+  color: var(--white);
   font-family: "Baloo Thambi 2", cursive;
   font-size: 1rem;
 }
 
-.inputText {
+.text-l {
   font-size: 1.125rem;
   font-family: "Baloo Thambi 2", cursive;
 }
-.inputText::placeholder {
+.text-l::placeholder {
   font-size: 1.125rem;
   font-family: "Baloo Thambi 2", cursive;
 }
 
-.dropdownCalendar {
-  font-family: "Baloo Thambi 2", cursive;
+.modalLink {
+  display: block;
+  text-decoration: underline rgba(240, 240, 240, 0.4);
+  color: inherit;
   font-size: 1.125rem;
+}
+.modalLink:hover {
+  color: #f0f0f0;
+  text-decoration: underline rgba(240, 240, 240, 1);
+}
+
+.text-xl {
+  font-family: "Baloo Thambi 2", cursive;
+  font-size: 1.25rem;
 }
