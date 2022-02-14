@@ -20,6 +20,8 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { NeoButton } from "..";
+import { ButtonContainer } from "../../pages/Home";
+
 const ExerciseHeader = styled.div`
   width: 100%;
   padding: 16px 32px;
@@ -161,11 +163,6 @@ export const Exercise = ({
                 }}
                 size="md"
               />
-              {/* <NeoInput
-                value={exercise}
-                onChange={(event) => setExercise(event.target.value)}
-                placeholder="Exercise name"
-              /> */}
             </ExerciseHeader>
             <SetsContainer>
               {sets.map((set, index) => (
@@ -184,7 +181,6 @@ export const Exercise = ({
                   />
                   <NumberInput
                     placeholder="Weight"
-                    // label="Weight"
                     label={index === 0 ? "Weight:" : null}
                     onChange={(value) => updateSet(set, "weight", value)}
                     classNames={{
@@ -212,12 +208,14 @@ export const Exercise = ({
         </WorkoutContainer>
       </Main>
       <Footer>
-        <NeoButton
-          icon={<AiOutlinePlus size="1.5rem" />}
-          onClick={onAddSetHandler}
-          color="red"
-          text="Add New Set"
-        />
+        <ButtonContainer>
+          <NeoButton
+            icon={<AiOutlinePlus size="1.5rem" />}
+            onClick={onAddSetHandler}
+            color="red"
+            text="Add New Set"
+          />
+        </ButtonContainer>
       </Footer>
     </Layout>
   );

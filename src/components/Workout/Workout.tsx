@@ -34,6 +34,7 @@ import {
 } from "react-icons/ai";
 import { DatePicker } from "@mantine/dates";
 import { options } from "../../components/MuscleGroupSelector/MuscleGroupSelector";
+import { ButtonContainer } from "../../pages/Home";
 
 const initialState: WorkoutDataType = {
   muscleGroups: [],
@@ -249,11 +250,13 @@ const Workout = ({ data }: WorkoutType) => {
         </WorkoutContainer>
       </Main>
       <Footer>
-        <NeoButton
-          onClick={() => setExercisePage(true)}
-          text="Add exercise"
-          color="red"
-        />
+        <ButtonContainer>
+          <NeoButton
+            onClick={() => setExercisePage(true)}
+            text="Add exercise"
+            color="red"
+          />
+        </ButtonContainer>
       </Footer>
     </Layout>
   );
