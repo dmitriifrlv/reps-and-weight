@@ -1,7 +1,4 @@
 import { useContext, useEffect, useState, useReducer } from "react";
-// import MuscleGroupSelector, {
-//   SelectOptionType,
-// } from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 import { WorkoutDataType, ExerciseType } from "../../Types/WorkoutTypes";
 import { WorkoutType, WorkoutActionType } from "./Workout.types";
 import { Exercise } from "./Exercise";
@@ -12,7 +9,6 @@ import {
   useUpdateWorkoutMutation,
 } from "../../app/service";
 import { useNavigate, useParams } from "react-router-dom";
-// import { DateInput } from "../DatePicker/DatePicker";
 import { ThemeContext } from "../../Styles/ThemeContext";
 import {
   InputContainer,
@@ -30,14 +26,13 @@ import {
   ButtonBlock,
 } from "../Layout.styles";
 import { NeoButton } from "..";
-import { ActionIcon } from "@mantine/core";
+import { ActionIcon, MultiSelect } from "@mantine/core";
 import {
   AiOutlineArrowLeft,
   AiOutlineSave,
   AiOutlineDelete,
 } from "react-icons/ai";
 import { DatePicker } from "@mantine/dates";
-import { MultiSelect } from "@mantine/core";
 import { options } from "../../components/MuscleGroupSelector/MuscleGroupSelector";
 
 const initialState: WorkoutDataType = {
@@ -210,23 +205,13 @@ const Workout = ({ data }: WorkoutType) => {
                   }
                   size="md"
                   classNames={{
-                    label: "textLabel",
-                    input: "inputText",
-                    day: "dropdownCalendar",
-                    weekday: "dropdownCalendar",
-                    month: "dropdownCalendar",
+                    label: "text",
+                    input: "text-l",
+                    day: "text-l",
+                    weekday: "text-l",
+                    month: "text-l",
                   }}
                 />
-                {/* <DateInput
-                  value={
-                    typeof workout.date === "string"
-                      ? new Date(workout.date)
-                      : workout.date
-                  }
-                  onChange={(date: Date) =>
-                    dispatchWorkout({ type: "dateChange", payload: date })
-                  }
-                /> */}
               </InputContainer>
               <InputContainer>
                 <MultiSelect
@@ -235,9 +220,9 @@ const Workout = ({ data }: WorkoutType) => {
                   placeholder="What do you train today?"
                   data={options}
                   classNames={{
-                    label: "textLabel",
-                    input: "inputText",
-                    dropdown: "inputText",
+                    label: "text",
+                    input: "text-l",
+                    dropdown: "text-l",
                   }}
                   value={workout.muscleGroups}
                   onChange={(value) =>
@@ -248,18 +233,6 @@ const Workout = ({ data }: WorkoutType) => {
                   }
                   size="md"
                 />
-                {/* <MuscleGroupSelector
-                  showMuscleGroups={workout.muscleGroups}
-                  onChange={(values) => {
-                    const muscleGroups = values.map(
-                      (muscleGroup: SelectOptionType) => muscleGroup.value
-                    );
-                    dispatchWorkout({
-                      type: "muscleGroupsChange",
-                      payload: muscleGroups,
-                    });
-                  }}
-                /> */}
               </InputContainer>
             </WorkoutHeader>
             <ExercisesContainer>
