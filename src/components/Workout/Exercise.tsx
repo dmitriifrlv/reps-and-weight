@@ -20,6 +20,7 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { NeoButton } from "..";
+import { AnimatePresence, motion } from "framer-motion";
 import { ButtonContainer } from "../../pages/Home";
 
 const ExerciseHeader = styled.div`
@@ -42,7 +43,7 @@ const SetsContainer = styled.div`
   padding-bottom: 32px;
 `;
 
-const ExerciseRow = styled.div`
+const ExerciseRow = styled(motion.div)`
   display: flex;
   align-items: center;
   gap: 24px;
@@ -165,44 +166,57 @@ export const Exercise = ({
               />
             </ExerciseHeader>
             <SetsContainer>
-              {sets.map((set, index) => (
-                <ExerciseRow key={set.id}>
-                  <NumberInput
-                    placeholder="Reps"
-                    label={index === 0 ? "Reps:" : null}
-                    onChange={(value) => updateSet(set, "reps", value)}
-                    classNames={{
-                      label: "text",
-                      input: "text-l",
+              <AnimatePresence>
+                {sets.map((set, index) => (
+                  <ExerciseRow
+                    key={set.id}
+                    initial={{ y: 1000 }}
+                    animate={{ y: 0 }}
+                    exit={{ x: -1000 }}
+                    transition={{
+                      ease: "easeInOut",
+                      duration: 0.2,
                     }}
-                    sx={{ width: "100%" }}
-                    size="md"
-                    value={set.reps}
-                  />
-                  <NumberInput
-                    placeholder="Weight"
-                    label={index === 0 ? "Weight:" : null}
-                    onChange={(value) => updateSet(set, "weight", value)}
-                    classNames={{
-                      label: "text",
-                      input: "text-l",
-                    }}
-                    sx={{ width: "100%" }}
-                    size="md"
-                    step={0.25}
-                    precision={2}
-                    value={set.weight}
-                  />
-                  <ActionIcon
-                    variant="light"
-                    onClick={() => onDeleteSetHandler(set)}
-                    size="xl"
-                    sx={{ alignSelf: "flex-end" }}
+                    layout
+                    // transition={{ type: "spring", bounce: 0, duration: 0.2 }}
                   >
-                    <AiOutlineDelete size="24px" />
-                  </ActionIcon>
-                </ExerciseRow>
-              ))}
+                    <NumberInput
+                      placeholder="Reps"
+                      label={index === 0 ? "Reps:" : null}
+                      onChange={(value) => updateSet(set, "reps", value)}
+                      classNames={{
+                        label: "text",
+                        input: "text-l",
+                      }}
+                      sx={{ width: "100%" }}
+                      size="md"
+                      value={set.reps}
+                    />
+                    <NumberInput
+                      placeholder="Weight"
+                      label={index === 0 ? "Weight:" : null}
+                      onChange={(value) => updateSet(set, "weight", value)}
+                      classNames={{
+                        label: "text",
+                        input: "text-l",
+                      }}
+                      sx={{ width: "100%" }}
+                      size="md"
+                      step={0.25}
+                      precision={2}
+                      value={set.weight}
+                    />
+                    <ActionIcon
+                      variant="light"
+                      onClick={() => onDeleteSetHandler(set)}
+                      size="xl"
+                      sx={{ alignSelf: "flex-end" }}
+                    >
+                      <AiOutlineDelete size="24px" />
+                    </ActionIcon>
+                  </ExerciseRow>
+                ))}
+              </AnimatePresence>
             </SetsContainer>
           </WorkoutCard>
         </WorkoutContainer>
