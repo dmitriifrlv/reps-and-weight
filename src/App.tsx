@@ -4,6 +4,8 @@ import styled from "@emotion/styled";
 import { useContext } from "react";
 import { ThemeContext } from "./Styles/ThemeContext";
 import AuthRoute from "./app/AuthRoute";
+import { CreateNewPassword } from "./pages/CreateNewPassword";
+import { ForgotPassword } from "./pages/ForgotPassword";
 
 const AppContainer = styled.div<{ darkMode: boolean }>`
   color: ${({ theme, darkMode }) =>
@@ -25,6 +27,11 @@ function App() {
     <AppContainer darkMode={darkMode}>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/create-new-password/:token"
+          element={<CreateNewPassword />}
+        />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           index
           element={
