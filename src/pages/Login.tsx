@@ -3,17 +3,23 @@ import { NeoButton } from "../components";
 import { theme } from "../Styles/Theme";
 import styled from "@emotion/styled";
 import { useLoginMutation, useSignupMutation } from "../app/service";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../app/AuthContext";
 import { TextInput, PasswordInput } from "@mantine/core";
 import { AuthFormContainer } from "../components/AuthFormContainer";
 
-const InputsContainer = styled.div`
-  height: 59%;
-  padding: 0 2rem;
+const PasswordContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 12px;
+`;
+
+const InputsContainer = styled.div`
+  height: 59%;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 `;
 
 const AuthFooter = styled.footer`
@@ -80,17 +86,22 @@ const Login = () => {
           }}
           size="md"
         />
-        <PasswordInput
-          value={password}
-          placeholder="Password"
-          label="Password"
-          onChange={(event) => setPassword(event.currentTarget.value)}
-          classNames={{
-            label: "text",
-            input: "text-l",
-          }}
-          size="md"
-        />
+        <PasswordContainer>
+          <PasswordInput
+            value={password}
+            placeholder="Password"
+            label="Password"
+            onChange={(event) => setPassword(event.currentTarget.value)}
+            classNames={{
+              label: "text",
+              input: "text-l",
+            }}
+            size="md"
+          />
+          <Link className="ForgotPasswordLink" to="/forgot-password">
+            Forgot your password?
+          </Link>
+        </PasswordContainer>
         <NeoButton
           type="submit"
           fullWidth

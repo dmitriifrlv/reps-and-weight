@@ -109,6 +109,15 @@ h6 {
   color: #f0f0f0;
   text-decoration: underline rgba(240, 240, 240, 1);
 }
+.ForgotPasswordLink {
+  text-decoration: underline rgba(240, 240, 240, 0.4);
+  color: inherit;
+  font-size: 1.125rem;
+  width: fit-content;
+}
+.ForgotPasswordLink:hover {
+  text-decoration: underline rgba(240, 240, 240, 1);
+}
 
 .text-xl {
   font-family: "Baloo Thambi 2", cursive;
