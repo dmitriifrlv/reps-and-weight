@@ -28,7 +28,7 @@ const Instruction = styled.p`
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [getNewPassword, getNewPasswordResponse] = useForgotPasswordMutation();
+  const [getNewPassword] = useForgotPasswordMutation();
   const [error, setError] = useState(false);
 
   const resetPasswordHandler = (e: React.SyntheticEvent) => {
