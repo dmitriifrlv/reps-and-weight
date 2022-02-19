@@ -15,7 +15,9 @@ ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <ColorModeProvider>
-        <MantineProvider theme={{ colorScheme: "dark" }}>
+        <MantineProvider
+          theme={{ colorScheme: "dark", fontFamily: "Baloo Thambi 2" }}
+        >
           <AuthProvider>
             <BrowserRouter>
               <Provider store={store}>
