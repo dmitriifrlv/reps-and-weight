@@ -2,62 +2,24 @@ import React, { useContext, useEffect, useState } from "react";
 import { NeoButton } from "../components";
 import { theme } from "../Styles/Theme";
 import styled from "@emotion/styled";
-import { CgGym } from "react-icons/cg";
-import { ThemeContext } from "../Styles/ThemeContext";
 import { useLoginMutation, useSignupMutation } from "../app/service";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../app/AuthContext";
 import { TextInput, PasswordInput } from "@mantine/core";
+import { AuthFormContainer } from "../components/AuthFormContainer";
 
-type CardProps = {
-  darkMode: boolean;
-};
-
-const LogoContainer = styled.div`
-  height: 25%;
+const PasswordContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 1rem;
-`;
-
-const LogoText = styled.p`
-  font-size: 2rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-`;
-
-const FormContainer = styled.form<CardProps>`
-  label: authForm;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  justify-content: center;
-  align-items: space-between;
-  border-radius: 1rem;
-  height: 100%;
-  width: 100%;
-  box-shadow: ${({ darkMode }) =>
-    darkMode ? theme.shadows.dark.bsDark : theme.shadows.light.bsLight};
-  transition: box-shadow 0.2s ease;
-  @media (min-width: 600px) {
-    height: 75%;
-    width: 75%;
-    max-width: 600px;
-  }
-  @media (min-width: 992px) {
-    height: 75%;
-    width: 50%;
-    max-width: 600px;
-  }
+  gap: 12px;
 `;
 
 const InputsContainer = styled.div`
   height: 59%;
-  padding: 0 2rem;
+  padding: 0 32px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 32px;
 `;
 
 const AuthFooter = styled.footer`
@@ -78,7 +40,6 @@ const AuthFooter = styled.footer`
 
 const Login = () => {
   const authContext = useContext(AuthContext);
-  const { darkMode } = useContext(ThemeContext);
   const location: any = useLocation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -112,24 +73,22 @@ const Login = () => {
   }, [authContext, from, loginResponse, navigate, signupResponse.isSuccess]);
 
   return (
-    <>
-      <FormContainer onSubmit={onSubmitHandler} darkMode={darkMode}>
-        <LogoContainer>
-          <CgGym size="5rem" color="#b43919" />
-          <LogoText>Reps & Weight</LogoText>
-        </LogoContainer>
-        <InputsContainer>
-          <TextInput
-            placeholder="jonhdoe@gmail.com"
-            label="Email"
-            onChange={(event) => setEmail(event.currentTarget.value)}
-            classNames={{
-              label: "text",
-              input: "text-l",
-            }}
-            size="md"
-          />
+    <AuthFormContainer onSubmitHandler={onSubmitHandler}>
+      <InputsContainer>
+        <TextInput
+          placeholder="jonhdoe@gmail.com"
+          label="Email"
+          value={email}
+          onChange={(event) => setEmail(event.currentTarget.value)}
+          classNames={{
+            label: "text",
+            input: "text-l",
+          }}
+          size="md"
+        />
+        <PasswordContainer>
           <PasswordInput
+            value={password}
             placeholder="Password"
             label="Password"
             onChange={(event) => setPassword(event.currentTarget.value)}
@@ -138,31 +97,31 @@ const Login = () => {
               input: "text-l",
             }}
             size="md"
-            sx={{
-              "&::placeholder": { fontFamily: "Baloo Thambi 2", color: "red" },
-            }}
           />
-          <NeoButton
-            type="submit"
-            fullWidth
-            text={isLogin ? "Sign In" : "Sign Up"}
-            onClick={onSubmitHandler}
-            size="large"
-            isLoading={loginResponse.isLoading}
-          />
-        </InputsContainer>
+          <Link className="ForgotPasswordLink" to="/forgot-password">
+            Forgot your password?
+          </Link>
+        </PasswordContainer>
+        <NeoButton
+          type="submit"
+          fullWidth
+          text={isLogin ? "Sign In" : "Sign Up"}
+          onClick={onSubmitHandler}
+          size="large"
+          isLoading={loginResponse.isLoading}
+        />
+      </InputsContainer>
 
-        <AuthFooter>
-          <NeoButton
-            size="large"
-            fullWidth
-            color="red"
-            text={isLogin ? "Create Account" : "Have an account? Sign In!"}
-            onClick={() => setIsLogin(!isLogin)}
-          />
-        </AuthFooter>
-      </FormContainer>
-    </>
+      <AuthFooter>
+        <NeoButton
+          size="large"
+          fullWidth
+          color="red"
+          text={isLogin ? "Create Account" : "Have an account? Sign In!"}
+          onClick={() => setIsLogin(!isLogin)}
+        />
+      </AuthFooter>
+    </AuthFormContainer>
   );
 };
 
