@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { AuthFormContainer } from "../components/AuthFormContainer";
 import styled from "@emotion/styled";
 import { TextInput, Button } from "@mantine/core";
 import { theme as rnwTheme } from "../Styles/Theme";
+import { useForgotPasswordMutation } from "../app/service";
 
 const ContentContainer = styled.div`
   height: 100%;
@@ -27,8 +28,19 @@ const Instruction = styled.p`
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [getNewPassword, getNewPasswordResponse] = useForgotPasswordMutation();
+  const [error, setError] = useState(false);
 
-  const resetPasswordHandler = () => console.log("reset");
+  const resetPasswordHandler = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (email === "") {
+      setError(true);
+      return;
+    }
+    setError(false);
+    getNewPassword({ email });
+  };
+
   return (
     <AuthFormContainer onSubmitHandler={resetPasswordHandler}>
       <ContentContainer>
@@ -40,6 +52,9 @@ export const ForgotPassword = () => {
             password.
           </Instruction>
           <TextInput
+            error={
+              error && email === "" ? "The email field cannot be empty" : null
+            }
             placeholder="example@gmail.com"
             label="Email"
             value={email}
@@ -52,6 +67,8 @@ export const ForgotPassword = () => {
           />
         </InputsContainer>
         <Button
+          type="submit"
+          onClick={resetPasswordHandler}
           styles={(theme) => ({
             root: {
               backgroundColor: rnwTheme.colors.red,

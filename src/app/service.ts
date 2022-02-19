@@ -60,6 +60,13 @@ export const rnwApi = createApi({
       }),
       invalidatesTags: ["workouts"],
     }),
+    forgotPassword: builder.mutation<{ message: string }, { email: string }>({
+      query: (payload) => ({
+        url: `forgotPassword`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -71,4 +78,5 @@ export const {
   useSignupMutation,
   useGetUserInfoQuery,
   useLazyGetWorkoutQuery,
+  useForgotPasswordMutation,
 } = rnwApi;
