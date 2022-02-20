@@ -8,6 +8,7 @@
     "@mantine/core": "^3.6.9",
     "@mantine/dates": "^3.6.9",
     "@mantine/hooks": "^3.6.9",
+    "@mantine/notifications": "^3.6.9",
     "@reduxjs/toolkit": "^1.7.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",

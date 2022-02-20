@@ -4,6 +4,8 @@ import styled from "@emotion/styled";
 import { TextInput, Button } from "@mantine/core";
 import { theme as rnwTheme } from "../Styles/Theme";
 import { useForgotPasswordMutation } from "../app/service";
+import { isFetchBaseQueryErrorWithStringError } from "../app/helpers";
+import { useNotifications } from "@mantine/notifications";
 
 const ContentContainer = styled.div`
   height: 100%;
@@ -27,18 +29,42 @@ const Instruction = styled.p`
 `;
 
 export const ForgotPassword = () => {
+  const notifications = useNotifications();
   const [email, setEmail] = useState("");
   const [getNewPassword] = useForgotPasswordMutation();
   const [error, setError] = useState(false);
 
-  const resetPasswordHandler = (e: React.SyntheticEvent) => {
+  const resetPasswordHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (email === "") {
       setError(true);
       return;
     }
     setError(false);
-    getNewPassword({ email });
+    try {
+      await getNewPassword({ email }).unwrap();
+      notifications.showNotification({
+        title: "Success",
+        message:
+          "Recovery link has been successfully sent to your email. Please checkout your incoming messages or spam folder.",
+        color: "green",
+        autoClose: 10000,
+      });
+    } catch (err) {
+      if (isFetchBaseQueryErrorWithStringError(err)) {
+        notifications.showNotification({
+          title: "Error",
+          message: err.data.message,
+          color: "red",
+        });
+      } else {
+        notifications.showNotification({
+          title: "Error",
+          message: "Something went wrong. Please try again later",
+          color: "red",
+        });
+      }
+    }
   };
 
   return (

@@ -7,6 +7,8 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { AuthContext } from "../app/AuthContext";
 import { TextInput, PasswordInput } from "@mantine/core";
 import { AuthFormContainer } from "../components/AuthFormContainer";
+import { useNotifications } from "@mantine/notifications";
+import { isFetchBaseQueryErrorWithStringError } from "../app/helpers";
 
 const PasswordContainer = styled.div`
   display: flex;
@@ -39,6 +41,7 @@ const AuthFooter = styled.footer`
 `;
 
 const Login = () => {
+  const notifications = useNotifications();
   const authContext = useContext(AuthContext);
   const location: any = useLocation();
   const navigate = useNavigate();
@@ -61,16 +64,71 @@ const Login = () => {
         email,
         password,
       };
-      isLogin ? login(user) : signup(user);
+      if (isLogin) {
+        try {
+          await login(user).unwrap();
+        } catch (err) {
+          if (isFetchBaseQueryErrorWithStringError(err)) {
+            notifications.showNotification({
+              title: "Error",
+              message: err.data.message,
+              color: "red",
+            });
+          } else {
+            notifications.showNotification({
+              title: "Error",
+              message: "Something went wrong. Please try again later",
+              color: "red",
+            });
+          }
+        }
+      } else {
+        try {
+          await signup(user).unwrap();
+        } catch (err) {
+          if (isFetchBaseQueryErrorWithStringError(err)) {
+            notifications.showNotification({
+              title: "Error",
+              message: err.data.message,
+              color: "red",
+            });
+          } else {
+            notifications.showNotification({
+              title: "Error",
+              message: "Something went wrong. Please try again later",
+              color: "red",
+            });
+          }
+        }
+      }
     }
   };
 
   useEffect(() => {
-    if (loginResponse.isSuccess || signupResponse.isSuccess) {
+    if (loginResponse.isSuccess) {
       authContext.setAuthState(loginResponse.data);
       navigate(from, { replace: true });
     }
-  }, [authContext, from, loginResponse, navigate, signupResponse.isSuccess]);
+  }, [authContext, from, loginResponse, navigate]);
+
+  useEffect(() => {
+    if (signupResponse.isSuccess) {
+      authContext.setAuthState(signupResponse.data);
+      navigate(from, { replace: true });
+    }
+  }, [authContext, from, navigate, signupResponse]);
+
+  useEffect(() => {
+    if (signupResponse.isSuccess) {
+      notifications.showNotification({
+        title: "Success",
+        message: "You have succesfully created your account!",
+        color: "green",
+        className: "notification",
+        autoClose: 5000,
+      });
+    }
+  }, [signupResponse.isSuccess, notifications]);
 
   return (
     <AuthFormContainer onSubmitHandler={onSubmitHandler}>
@@ -105,7 +163,7 @@ const Login = () => {
         <NeoButton
           type="submit"
           fullWidth
-          text={isLogin ? "Sign In" : "Sign Up"}
+          text={isLogin ? "Sign In" : "Create Account"}
           onClick={onSubmitHandler}
           size="large"
           isLoading={loginResponse.isLoading}
