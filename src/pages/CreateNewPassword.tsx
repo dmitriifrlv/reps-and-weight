@@ -1,9 +1,12 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { AuthFormContainer } from "../components/AuthFormContainer";
 import styled from "@emotion/styled";
 import { PasswordInput, Button } from "@mantine/core";
 import { theme as rnwTheme } from "../Styles/Theme";
+import { useResetPasswordMutation } from "../app/service";
+import { isFetchBaseQueryErrorWithStringError } from "../app/helpers";
+import { useNotifications } from "@mantine/notifications";
 
 const ContentContainer = styled.div`
   height: 100%;
@@ -23,11 +26,49 @@ const Title = styled.h2`
 `;
 
 export const CreateNewPassword = () => {
+  const notifications = useNotifications();
+  const navigate = useNavigate();
   const params = useParams();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  console.log(params);
-  const resetPasswordHandler = () => console.log("reset");
+  const [resetPassword, resetPasswordResponse] = useResetPasswordMutation();
+
+  const resetPasswordHandler = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    if (params.token && password !== "") {
+      try {
+        await resetPassword({ token: params.token, password }).unwrap();
+      } catch (err) {
+        if (isFetchBaseQueryErrorWithStringError(err)) {
+          notifications.showNotification({
+            title: "Error",
+            message: err.data.message,
+            color: "red",
+          });
+        } else {
+          notifications.showNotification({
+            title: "Error",
+            message: "Something went wrong. Please try again later",
+            color: "red",
+          });
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (resetPasswordResponse.isSuccess) {
+      notifications.showNotification({
+        title: "Success",
+        message: "Your password has been succesully updated!",
+        color: "green",
+        className: "notification",
+        autoClose: 10000,
+      });
+      navigate("/login");
+    }
+  }, [resetPasswordResponse.isSuccess, notifications, navigate]);
+
   return (
     <AuthFormContainer onSubmitHandler={resetPasswordHandler}>
       <ContentContainer>
@@ -57,6 +98,7 @@ export const CreateNewPassword = () => {
           />
         </InputsContainer>
         <Button
+          type="submit"
           styles={(theme) => ({
             root: {
               backgroundColor: rnwTheme.colors.red,

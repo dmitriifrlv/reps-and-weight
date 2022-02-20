@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AuthFormContainer } from "../components/AuthFormContainer";
 import styled from "@emotion/styled";
 import { TextInput, Button } from "@mantine/core";
 import { theme as rnwTheme } from "../Styles/Theme";
 import { useForgotPasswordMutation } from "../app/service";
+import { isFetchBaseQueryErrorWithStringError } from "../app/helpers";
+import { useNotifications } from "@mantine/notifications";
 
 const ContentContainer = styled.div`
   height: 100%;
@@ -27,19 +29,49 @@ const Instruction = styled.p`
 `;
 
 export const ForgotPassword = () => {
+  const notifications = useNotifications();
   const [email, setEmail] = useState("");
   const [getNewPassword, getNewPasswordResponse] = useForgotPasswordMutation();
   const [error, setError] = useState(false);
 
-  const resetPasswordHandler = (e: React.SyntheticEvent) => {
+  const resetPasswordHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (email === "") {
       setError(true);
       return;
     }
     setError(false);
-    getNewPassword({ email });
+    try {
+      await getNewPassword({ email }).unwrap();
+    } catch (err) {
+      if (isFetchBaseQueryErrorWithStringError(err)) {
+        notifications.showNotification({
+          title: "Error",
+          message: err.data.message,
+          color: "red",
+        });
+      } else {
+        notifications.showNotification({
+          title: "Error",
+          message: "Something went wrong. Please try again later",
+          color: "red",
+        });
+      }
+    }
   };
+
+  useEffect(() => {
+    if (getNewPasswordResponse.isSuccess) {
+      notifications.showNotification({
+        title: "Success",
+        message:
+          "Recovery link has been successfully sent to your email. Please checkout your incoming messages and spam folder.",
+        color: "green",
+        className: "notification",
+        autoClose: 10000,
+      });
+    }
+  }, [getNewPasswordResponse.isSuccess, notifications]);
 
   return (
     <AuthFormContainer onSubmitHandler={resetPasswordHandler}>
