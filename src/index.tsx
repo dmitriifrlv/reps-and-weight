@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import { AuthProvider } from "./app/AuthContext";
 import { store } from "./app/store";
 import { MantineProvider } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,13 +19,15 @@ ReactDOM.render(
         <MantineProvider
           theme={{ colorScheme: "dark", fontFamily: "Baloo Thambi 2" }}
         >
-          <AuthProvider>
-            <BrowserRouter>
-              <Provider store={store}>
-                <App />
-              </Provider>
-            </BrowserRouter>
-          </AuthProvider>
+          <NotificationsProvider position="bottom-left">
+            <AuthProvider>
+              <BrowserRouter>
+                <Provider store={store}>
+                  <App />
+                </Provider>
+              </BrowserRouter>
+            </AuthProvider>
+          </NotificationsProvider>
         </MantineProvider>
       </ColorModeProvider>
     </ThemeProvider>
