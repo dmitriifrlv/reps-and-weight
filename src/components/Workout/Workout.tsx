@@ -34,6 +34,8 @@ import {
 } from "react-icons/ai";
 import { DatePicker } from "@mantine/dates";
 import { ButtonContainer } from "../../pages/Home";
+import { isFetchBaseQueryErrorWithStringError } from "../../app/helpers";
+import { useNotifications } from "@mantine/notifications";
 
 type SelectOptionType = { value: string; label: string };
 
@@ -92,6 +94,7 @@ const workoutReducer = (state: WorkoutDataType, action: WorkoutActionType) => {
 };
 
 const Workout = ({ data }: WorkoutType) => {
+  const notifications = useNotifications();
   const navigate = useNavigate();
   const params = useParams();
   const editMode = Boolean(params.workoutId);
@@ -124,12 +127,80 @@ const Workout = ({ data }: WorkoutType) => {
     setExercisePage(false);
   };
 
-  const onSaveWorkoutHandler = () => addWorkout(workout);
+  const onSaveWorkoutHandler = async () => {
+    try {
+      await addWorkout(workout).unwrap();
+      notifications.showNotification({
+        title: "Success",
+        message: "Your workout has been successfully saved!",
+        color: "green",
+      });
+    } catch (err) {
+      if (isFetchBaseQueryErrorWithStringError(err)) {
+        notifications.showNotification({
+          title: "Error",
+          message: err.data.message,
+          color: "red",
+        });
+      } else {
+        notifications.showNotification({
+          title: "Error",
+          message: "Something went wrong. Please try again later",
+          color: "red",
+        });
+      }
+    }
+  };
 
-  const onUpdateWorkoutHandler = () =>
-    updateWorkout({ id: params.workoutId, payload: workout });
+  const onUpdateWorkoutHandler = async () => {
+    try {
+      await updateWorkout({ id: params.workoutId, payload: workout }).unwrap();
+      notifications.showNotification({
+        title: "Success",
+        message: "Your workout has been successfully updated!",
+        color: "green",
+      });
+    } catch (err) {
+      if (isFetchBaseQueryErrorWithStringError(err)) {
+        notifications.showNotification({
+          title: "Error",
+          message: err.data.message,
+          color: "red",
+        });
+      } else {
+        notifications.showNotification({
+          title: "Error",
+          message: "Something went wrong. Please try again later",
+          color: "red",
+        });
+      }
+    }
+  };
 
-  const onDeleteWorkoutHandler = () => deleteWorkout(params.workoutId);
+  const onDeleteWorkoutHandler = async () => {
+    try {
+      await deleteWorkout(params.workoutId).unwrap();
+      notifications.showNotification({
+        title: "Success",
+        message: "Your workout has been successfully deleted!",
+        color: "green",
+      });
+    } catch (err) {
+      if (isFetchBaseQueryErrorWithStringError(err)) {
+        notifications.showNotification({
+          title: "Error",
+          message: err.data.message,
+          color: "red",
+        });
+      } else {
+        notifications.showNotification({
+          title: "Error",
+          message: "Something went wrong. Please try again later",
+          color: "red",
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     if (addWorkoutResponse.isSuccess) {

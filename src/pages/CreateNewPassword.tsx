@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthFormContainer } from "../components/AuthFormContainer";
 import styled from "@emotion/styled";
@@ -31,13 +31,20 @@ export const CreateNewPassword = () => {
   const params = useParams();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [resetPassword, resetPasswordResponse] = useResetPasswordMutation();
+  const [resetPassword] = useResetPasswordMutation();
 
   const resetPasswordHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (params.token && password !== "") {
       try {
         await resetPassword({ token: params.token, password }).unwrap();
+        notifications.showNotification({
+          title: "Success",
+          message:
+            "Your password has been succesully updated! You can log in now.",
+          color: "green",
+        });
+        navigate("/login");
       } catch (err) {
         if (isFetchBaseQueryErrorWithStringError(err)) {
           notifications.showNotification({
@@ -55,19 +62,6 @@ export const CreateNewPassword = () => {
       }
     }
   };
-
-  useEffect(() => {
-    if (resetPasswordResponse.isSuccess) {
-      notifications.showNotification({
-        title: "Success",
-        message: "Your password has been succesully updated!",
-        color: "green",
-        className: "notification",
-        autoClose: 10000,
-      });
-      navigate("/login");
-    }
-  }, [resetPasswordResponse.isSuccess, notifications, navigate]);
 
   return (
     <AuthFormContainer onSubmitHandler={resetPasswordHandler}>

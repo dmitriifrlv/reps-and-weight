@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AuthFormContainer } from "../components/AuthFormContainer";
 import styled from "@emotion/styled";
 import { TextInput, Button } from "@mantine/core";
@@ -31,7 +31,7 @@ const Instruction = styled.p`
 export const ForgotPassword = () => {
   const notifications = useNotifications();
   const [email, setEmail] = useState("");
-  const [getNewPassword, getNewPasswordResponse] = useForgotPasswordMutation();
+  const [getNewPassword] = useForgotPasswordMutation();
   const [error, setError] = useState(false);
 
   const resetPasswordHandler = async (e: React.SyntheticEvent) => {
@@ -43,6 +43,13 @@ export const ForgotPassword = () => {
     setError(false);
     try {
       await getNewPassword({ email }).unwrap();
+      notifications.showNotification({
+        title: "Success",
+        message:
+          "Recovery link has been successfully sent to your email. Please checkout your incoming messages or spam folder.",
+        color: "green",
+        autoClose: 10000,
+      });
     } catch (err) {
       if (isFetchBaseQueryErrorWithStringError(err)) {
         notifications.showNotification({
@@ -59,19 +66,6 @@ export const ForgotPassword = () => {
       }
     }
   };
-
-  useEffect(() => {
-    if (getNewPasswordResponse.isSuccess) {
-      notifications.showNotification({
-        title: "Success",
-        message:
-          "Recovery link has been successfully sent to your email. Please checkout your incoming messages and spam folder.",
-        color: "green",
-        className: "notification",
-        autoClose: 10000,
-      });
-    }
-  }, [getNewPasswordResponse.isSuccess, notifications]);
 
   return (
     <AuthFormContainer onSubmitHandler={resetPasswordHandler}>
