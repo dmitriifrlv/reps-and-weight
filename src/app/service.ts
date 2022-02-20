@@ -67,6 +67,16 @@ export const rnwApi = createApi({
         body: payload,
       }),
     }),
+    resetPassword: builder.mutation<
+      { message: string },
+      { password: string; token: string }
+    >({
+      query: ({ password, token }) => ({
+        url: `resetPassword/${token}`,
+        method: "PATCH",
+        body: { password },
+      }),
+    }),
   }),
 });
 
@@ -79,4 +89,5 @@ export const {
   useGetUserInfoQuery,
   useLazyGetWorkoutQuery,
   useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = rnwApi;
