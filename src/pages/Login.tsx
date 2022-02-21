@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NeoButton } from "../components";
 import { theme } from "../Styles/Theme";
 import styled from "@emotion/styled";
@@ -9,6 +9,9 @@ import { TextInput, PasswordInput } from "@mantine/core";
 import { AuthFormContainer } from "../components/AuthFormContainer";
 import { useNotifications } from "@mantine/notifications";
 import { isFetchBaseQueryErrorWithStringError } from "../app/helpers";
+import * as Yup from "yup";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const PasswordContainer = styled.div`
   display: flex;
@@ -40,65 +43,67 @@ const AuthFooter = styled.footer`
   }
 `;
 
+const validationSchema = Yup.object({
+  email: Yup.string().email("invalid email").required("required"),
+  password: Yup.string().min(3).required(),
+});
+
+type LoginFormType = Yup.InferType<typeof validationSchema>;
+
 const Login = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormType>({
+    resolver: yupResolver(validationSchema),
+  });
+
   const notifications = useNotifications();
   const authContext = useContext(AuthContext);
   const location: any = useLocation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [login, loginResponse] = useLoginMutation();
   const [signup, signupResponse] = useSignupMutation();
   const [isLogin, setIsLogin] = useState(true);
-  const [, setError] = useState(false);
 
   const from = location.state?.from?.pathname || "/";
 
-  const onSubmitHandler = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    if (email === "" || password === "") {
-      setError(true);
-      return;
-    } else {
-      const user = {
-        email,
-        password,
-      };
-      if (isLogin) {
-        try {
-          await login(user).unwrap();
-        } catch (err) {
-          if (isFetchBaseQueryErrorWithStringError(err)) {
-            notifications.showNotification({
-              title: "Error",
-              message: err.data.message,
-              color: "red",
-            });
-          } else {
-            notifications.showNotification({
-              title: "Error",
-              message: "Something went wrong. Please try again later",
-              color: "red",
-            });
-          }
+  const onSubmitHandler = async (data: { email: string; password: string }) => {
+    if (isLogin) {
+      try {
+        await login(data).unwrap();
+      } catch (err) {
+        if (isFetchBaseQueryErrorWithStringError(err)) {
+          notifications.showNotification({
+            title: "Error",
+            message: err.data.message,
+            color: "red",
+          });
+        } else {
+          notifications.showNotification({
+            title: "Error",
+            message: "Something went wrong. Please try again later",
+            color: "red",
+          });
         }
-      } else {
-        try {
-          await signup(user).unwrap();
-        } catch (err) {
-          if (isFetchBaseQueryErrorWithStringError(err)) {
-            notifications.showNotification({
-              title: "Error",
-              message: err.data.message,
-              color: "red",
-            });
-          } else {
-            notifications.showNotification({
-              title: "Error",
-              message: "Something went wrong. Please try again later",
-              color: "red",
-            });
-          }
+      }
+    } else {
+      try {
+        await signup(data).unwrap();
+      } catch (err) {
+        if (isFetchBaseQueryErrorWithStringError(err)) {
+          notifications.showNotification({
+            title: "Error",
+            message: err.data.message,
+            color: "red",
+          });
+        } else {
+          notifications.showNotification({
+            title: "Error",
+            message: "Something went wrong. Please try again later",
+            color: "red",
+          });
         }
       }
     }
@@ -131,30 +136,45 @@ const Login = () => {
   }, [signupResponse.isSuccess, notifications]);
 
   return (
-    <AuthFormContainer onSubmitHandler={onSubmitHandler}>
+    <AuthFormContainer onSubmitHandler={handleSubmit(onSubmitHandler)}>
       <InputsContainer>
-        <TextInput
-          placeholder="jonhdoe@gmail.com"
-          label="Email"
-          value={email}
-          onChange={(event) => setEmail(event.currentTarget.value)}
-          classNames={{
-            label: "text",
-            input: "text-l",
-          }}
-          size="md"
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              placeholder="jonhdoe@gmail.com"
+              label="Email"
+              classNames={{
+                label: "text",
+                input: "text-l",
+              }}
+              size="md"
+              error={errors.email?.message}
+              required={errors.email?.type === "required"}
+            />
+          )}
         />
+
         <PasswordContainer>
-          <PasswordInput
-            value={password}
-            placeholder="Password"
-            label="Password"
-            onChange={(event) => setPassword(event.currentTarget.value)}
-            classNames={{
-              label: "text",
-              input: "text-l",
-            }}
-            size="md"
+          <Controller
+            name="password"
+            control={control}
+            render={({ field }) => (
+              <PasswordInput
+                {...field}
+                placeholder="Password"
+                label="Password"
+                classNames={{
+                  label: "text",
+                  input: "text-l",
+                }}
+                size="md"
+                error={errors.password?.message}
+                required={errors.password?.type === "min"}
+              />
+            )}
           />
           <Link className="ForgotPasswordLink" to="/forgot-password">
             Forgot your password?
@@ -164,12 +184,10 @@ const Login = () => {
           type="submit"
           fullWidth
           text={isLogin ? "Sign In" : "Create Account"}
-          onClick={onSubmitHandler}
           size="large"
           isLoading={loginResponse.isLoading}
         />
       </InputsContainer>
-
       <AuthFooter>
         <NeoButton
           size="large"
