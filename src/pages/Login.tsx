@@ -44,7 +44,7 @@ const AuthFooter = styled.footer`
 `;
 
 const validationSchema = Yup.object({
-  email: Yup.string().email("invalid email").required("required"),
+  email: Yup.string().email("invalid email format").required("required"),
   password: Yup.string().min(3).required(),
 });
 
@@ -164,7 +164,7 @@ const Login = () => {
             render={({ field }) => (
               <PasswordInput
                 {...field}
-                placeholder="Password"
+                placeholder="Password must be at least 3 characters long"
                 label="Password"
                 classNames={{
                   label: "text",
