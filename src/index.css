@@ -123,3 +123,7 @@ h6 {
   font-family: "Baloo Thambi 2", cursive;
   font-size: 1.25rem;
 }
+.mantine-TextInput-error::first-letter,
+.mantine-PasswordInput-error::first-letter {
+  text-transform: capitalize;
+}
