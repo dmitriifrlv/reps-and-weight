@@ -148,7 +148,6 @@ const Login = () => {
               label="Email"
               classNames={{
                 label: "text",
-                input: "text-l",
               }}
               size="md"
               error={errors.email?.message}
@@ -168,7 +167,6 @@ const Login = () => {
                 label="Password"
                 classNames={{
                   label: "text",
-                  input: "text-l",
                 }}
                 size="md"
                 error={errors.password?.message}
