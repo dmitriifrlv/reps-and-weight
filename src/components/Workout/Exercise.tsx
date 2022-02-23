@@ -59,8 +59,8 @@ type ExerciseProps = {
 };
 
 const initialSetState = {
-  reps: 0,
-  weight: 0,
+  reps: undefined,
+  weight: undefined,
 };
 
 export const Exercise = ({
@@ -178,7 +178,6 @@ export const Exercise = ({
                       duration: 0.2,
                     }}
                     layout
-                    // transition={{ type: "spring", bounce: 0, duration: 0.2 }}
                   >
                     <NumberInput
                       placeholder="Reps"
