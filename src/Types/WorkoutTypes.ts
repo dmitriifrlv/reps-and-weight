@@ -1,6 +1,6 @@
 type SetType = {
-  reps: number;
-  weight: number;
+  reps: number | undefined;
+  weight: number | undefined;
   id?: string;
 };
 type ExerciseType = {
