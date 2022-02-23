@@ -1,32 +1,26 @@
 @font-face {
   font-family: "Baloo Thambi 2";
   font-weight: 400;
+  font-display: swap;
+  font-style: normal;
   src: local("Baloo Thambi 2"),
-    url(./fonts/BalooThambi2-Regular.ttf) format("truetype");
+    url(./fonts/BalooThambi2-Regular.woff2) format("woff2");
 }
 @font-face {
   font-family: "Baloo Thambi 2";
   font-weight: 500;
+  font-display: swap;
+  font-style: normal;
   src: local("Baloo Thambi 2"),
-    url(./fonts/BalooThambi2-Medium.ttf) format("truetype");
+    url(./fonts/BalooThambi2-Medium.woff2) format("woff2");
 }
 @font-face {
   font-family: "Baloo Thambi 2";
   font-weight: 600;
+  font-display: swap;
+  font-style: normal;
   src: local("Baloo Thambi 2"),
-    url(./fonts/BalooThambi2-SemiBold.ttf) format("truetype");
-}
-@font-face {
-  font-family: "Baloo Thambi 2";
-  font-weight: 700;
-  src: local("Baloo Thambi 2"),
-    url(./fonts/BalooThambi2-Bold.ttf) format("truetype");
-}
-@font-face {
-  font-family: "Baloo Thambi 2";
-  font-weight: 800;
-  src: local("Baloo Thambi 2"),
-    url(./fonts/BalooThambi2-ExtraBold.ttf) format("truetype");
+    url(./fonts/BalooThambi2-SemiBold.woff2) format("woff2");
 }
 
 *,
@@ -51,7 +45,7 @@ body,
 
 body {
   line-height: 1.5;
-  font-family: "Baloo Thambi 2", cursive;
+  font-family: "Baloo Thambi 2", sans-serif;
   -webkit-font-smoothing: antialiased;
   color: #2e2e2e;
   color: hsl(0, 0%, 34%);

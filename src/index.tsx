@@ -19,7 +19,7 @@ ReactDOM.render(
         <MantineProvider
           theme={{ colorScheme: "dark", fontFamily: "Baloo Thambi 2" }}
         >
-          <NotificationsProvider position="bottom-left">
+          <NotificationsProvider position="top-left">
             <AuthProvider>
               <BrowserRouter>
                 <Provider store={store}>
