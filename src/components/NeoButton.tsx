@@ -21,7 +21,6 @@ const StyledButton = styled.button<StyledButtonProps>`
   label: styledButton;
   width: ${({ fullWidth }) => (fullWidth ? "100%" : "fit-content")};
   height: ${({ size }) => (size === "large" ? "60px" : "")};
-  font-weight: 500;
   border:none;
   font-size: 1.4rem;
   border-radius: 0.5rem;
