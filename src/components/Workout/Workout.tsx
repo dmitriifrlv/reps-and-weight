@@ -204,19 +204,19 @@ const Workout = ({ data }: WorkoutType) => {
 
   useEffect(() => {
     if (addWorkoutResponse.isSuccess) {
-      navigate("/");
+      navigate("/home");
     }
   }, [addWorkoutResponse.isSuccess, navigate]);
 
   useEffect(() => {
     if (deleteWorkoutResponse.isSuccess) {
-      navigate("/");
+      navigate("/home");
     }
   }, [deleteWorkoutResponse.isSuccess, navigate]);
 
   useEffect(() => {
     if (updateWorkoutResponse.isSuccess) {
-      navigate("/");
+      navigate("/home");
     }
   }, [navigate, updateWorkoutResponse.isSuccess]);
 

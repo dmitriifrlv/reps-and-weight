@@ -76,8 +76,16 @@ export const Exercise = ({
   const [exercise, setExercise] = useState("");
   const [set, setSet] = useState(initialSetState);
   const [sets, setSets] = useState<SetType[] | []>([]);
+  const [setError, setSetError] = useState(false);
 
   const onAddSetHandler = () => {
+    const emptyField = sets.find((set) =>
+      Object.values(set).includes(undefined)
+    );
+    if (emptyField) {
+      setSetError(true);
+      return;
+    }
     const newSets = [...sets];
     newSets.push({ ...set, id: nanoid() });
     setSets(newSets);
@@ -190,6 +198,7 @@ export const Exercise = ({
                       sx={{ width: "100%" }}
                       size="md"
                       value={set.reps}
+                      error={setError && !set.reps && "Cannot be empty"}
                     />
                     <NumberInput
                       placeholder="Weight"

@@ -6,6 +6,7 @@ import { ThemeContext } from "./Styles/ThemeContext";
 import AuthRoute from "./app/AuthRoute";
 import { CreateNewPassword } from "./pages/CreateNewPassword";
 import { ForgotPassword } from "./pages/ForgotPassword";
+import { Landing } from "./pages/Landing";
 
 const AppContainer = styled.div<{ darkMode: boolean }>`
   color: ${({ theme, darkMode }) =>
@@ -26,6 +27,7 @@ function App() {
   return (
     <AppContainer darkMode={darkMode}>
       <Routes>
+        <Route index element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/create-new-password/:token"
@@ -33,7 +35,7 @@ function App() {
         />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
-          index
+          path="home"
           element={
             <AuthRoute>
               <Home />

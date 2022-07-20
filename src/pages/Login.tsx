@@ -52,7 +52,7 @@ const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [, setError] = useState(false);
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/home";
 
   const onSubmitHandler = async (e: React.SyntheticEvent) => {
     e.preventDefault();
